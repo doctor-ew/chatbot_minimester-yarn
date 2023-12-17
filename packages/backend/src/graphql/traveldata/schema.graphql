@@ -1,0 +1,28 @@
+# packages/graphql/types.graphql
+
+type Query {
+    bookings: [Booking]
+    bookingById(id: String!): Booking
+}
+
+type Booking {
+    bookingId: String!
+    noOfAdults: Int
+    noOfChildren: Int
+    noOfWeekendNights: Int
+    noOfWeekNights: Int
+    typeOfMealPlan: String
+    requiredCarParkingSpace: Boolean
+    roomTypeReserved: String
+    leadTime: Int
+    arrivalYear: Int
+    arrivalMonth: Int
+    arrivalDate: Int
+    marketSegmentType: String
+    repeatedGuest: Boolean
+    noOfPreviousCancellations: Int
+    noOfPreviousBookingsNotCanceled: Int
+    avgPricePerRoom: Float
+    noOfSpecialRequests: Int
+    bookingStatus: String
+}

@@ -1,0 +1,54 @@
+# packages/graphql/rick-and-morty/schema.graphql
+
+type PocketMorty {
+    id: Int
+    name: String
+    type: String
+    assetid: String
+    evolution: [Int]
+    evolutions: [Int]
+    rarity: String
+    basehp: Int
+    baseatk: Int
+    basedef: Int
+    basespd: Int
+    basexp: Int
+    stattotal: Int
+    dimensions: String
+    where_found: [String]
+}
+
+type PocketMortyEdge {
+    node: PocketMorty
+    cursor: String
+}
+
+type PocketMortyConnection {
+    edges: [PocketMortyEdge]
+    pageInfo: PageInfo
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: String
+}
+
+type Query {
+    pocketMorties(
+        first: Int,
+        after: String,
+        type: [String],
+        rarity: [String],
+        assetid: String,
+        basexp: Int,
+        basehp: Int,
+        baseatk: Int,
+        basedef: Int,
+        basespd: Int,
+        stattotal: Int,
+        dimensions: [String],
+        where_found: [String],
+        sortBy: String
+    ): PocketMortyConnection
+    pocketMorty(id: Int!): PocketMorty
+}

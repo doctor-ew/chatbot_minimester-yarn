@@ -1,0 +1,1557 @@
+[
+  {
+    "id": 2,
+    "name": "Morty Smith",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/1",
+      "https://rickandmortyapi.com/api/episode/2",
+      "https://rickandmortyapi.com/api/episode/3",
+      "https://rickandmortyapi.com/api/episode/4",
+      "https://rickandmortyapi.com/api/episode/5",
+      "https://rickandmortyapi.com/api/episode/6",
+      "https://rickandmortyapi.com/api/episode/7",
+      "https://rickandmortyapi.com/api/episode/8",
+      "https://rickandmortyapi.com/api/episode/9",
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/11",
+      "https://rickandmortyapi.com/api/episode/12",
+      "https://rickandmortyapi.com/api/episode/13",
+      "https://rickandmortyapi.com/api/episode/14",
+      "https://rickandmortyapi.com/api/episode/15",
+      "https://rickandmortyapi.com/api/episode/16",
+      "https://rickandmortyapi.com/api/episode/17",
+      "https://rickandmortyapi.com/api/episode/18",
+      "https://rickandmortyapi.com/api/episode/19",
+      "https://rickandmortyapi.com/api/episode/20",
+      "https://rickandmortyapi.com/api/episode/21",
+      "https://rickandmortyapi.com/api/episode/22",
+      "https://rickandmortyapi.com/api/episode/23",
+      "https://rickandmortyapi.com/api/episode/24",
+      "https://rickandmortyapi.com/api/episode/25",
+      "https://rickandmortyapi.com/api/episode/26",
+      "https://rickandmortyapi.com/api/episode/27",
+      "https://rickandmortyapi.com/api/episode/28",
+      "https://rickandmortyapi.com/api/episode/29",
+      "https://rickandmortyapi.com/api/episode/30",
+      "https://rickandmortyapi.com/api/episode/31",
+      "https://rickandmortyapi.com/api/episode/32",
+      "https://rickandmortyapi.com/api/episode/33",
+      "https://rickandmortyapi.com/api/episode/34",
+      "https://rickandmortyapi.com/api/episode/35",
+      "https://rickandmortyapi.com/api/episode/36",
+      "https://rickandmortyapi.com/api/episode/37",
+      "https://rickandmortyapi.com/api/episode/38",
+      "https://rickandmortyapi.com/api/episode/39",
+      "https://rickandmortyapi.com/api/episode/40",
+      "https://rickandmortyapi.com/api/episode/41",
+      "https://rickandmortyapi.com/api/episode/42",
+      "https://rickandmortyapi.com/api/episode/43",
+      "https://rickandmortyapi.com/api/episode/44",
+      "https://rickandmortyapi.com/api/episode/45",
+      "https://rickandmortyapi.com/api/episode/46",
+      "https://rickandmortyapi.com/api/episode/47",
+      "https://rickandmortyapi.com/api/episode/48",
+      "https://rickandmortyapi.com/api/episode/49",
+      "https://rickandmortyapi.com/api/episode/50",
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/2",
+    "created": "2017-11-04T18:50:21.651Z"
+  },
+  {
+    "id": 14,
+    "name": "Alien Morty",
+    "status": "unknown",
+    "species": "Alien",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/14.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/14",
+    "created": "2017-11-04T20:51:31.373Z"
+  },
+  {
+    "id": 18,
+    "name": "Antenna Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "Human with antennae",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/18.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/18",
+    "created": "2017-11-04T22:25:29.008Z"
+  },
+  {
+    "id": 21,
+    "name": "Aqua Morty",
+    "status": "unknown",
+    "species": "Humanoid",
+    "type": "Fish-Person",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/21.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/21",
+    "created": "2017-11-04T22:39:48.055Z"
+  },
+  {
+    "id": 27,
+    "name": "Artist Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/27.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/27",
+    "created": "2017-11-05T08:59:07.457Z"
+  },
+  {
+    "id": 42,
+    "name": "Big Head Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "Human with giant head",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/42.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/42",
+    "created": "2017-11-05T10:15:53.349Z"
+  },
+  {
+    "id": 43,
+    "name": "Big Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/43.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/43",
+    "created": "2017-11-05T10:17:04.997Z"
+  },
+  {
+    "id": 44,
+    "name": "Body Guard Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/44.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/44",
+    "created": "2017-11-05T10:18:11.062Z"
+  },
+  {
+    "id": 53,
+    "name": "Blue Shirt Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/53.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/53",
+    "created": "2017-11-05T11:28:38.627Z"
+  },
+  {
+    "id": 61,
+    "name": "Campaign Manager Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/61.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/61",
+    "created": "2017-11-05T11:53:44.737Z"
+  },
+  {
+    "id": 73,
+    "name": "Cop Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/73.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/73",
+    "created": "2017-11-30T11:43:04.217Z"
+  },
+  {
+    "id": 77,
+    "name": "Cowboy Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/77.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/77",
+    "created": "2017-11-30T14:13:17.371Z"
+  },
+  {
+    "id": 83,
+    "name": "Cronenberg Morty",
+    "status": "unknown",
+    "species": "Cronenberg",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Cronenberg Earth",
+      "url": "https://rickandmortyapi.com/api/location/12"
+    },
+    "location": {
+      "name": "Earth (C-137)",
+      "url": "https://rickandmortyapi.com/api/location/1"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/83.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/6",
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/83",
+    "created": "2017-11-30T20:02:29.204Z"
+  },
+  {
+    "id": 84,
+    "name": "Cult Leader Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Hideout Planet",
+      "url": "https://rickandmortyapi.com/api/location/27"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/84.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/84",
+    "created": "2017-11-30T20:41:48.080Z"
+  },
+  {
+    "id": 85,
+    "name": "Cyclops Morty",
+    "status": "Alive",
+    "species": "Humanoid",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/85.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/85",
+    "created": "2017-11-30T20:49:52.133Z"
+  },
+  {
+    "id": 95,
+    "name": "Dipper and Mabel Mortys",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "unknown",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/95.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/95",
+    "created": "2017-12-01T11:54:36.670Z"
+  },
+  {
+    "id": 113,
+    "name": "Eric Stoltz Mask Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Eric Stoltz Mask Earth",
+      "url": "https://rickandmortyapi.com/api/location/33"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/113.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/113",
+    "created": "2017-12-26T13:43:29.296Z"
+  },
+  {
+    "id": 118,
+    "name": "Evil Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/118.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/28",
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/118",
+    "created": "2017-12-26T16:13:41.103Z"
+  },
+  {
+    "id": 123,
+    "name": "Fat Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/123.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/123",
+    "created": "2017-12-26T17:22:40.315Z"
+  },
+  {
+    "id": 143,
+    "name": "Glasses Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/143.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/143",
+    "created": "2017-12-27T20:37:26.134Z"
+  },
+  {
+    "id": 152,
+    "name": "Hammerhead Morty",
+    "status": "unknown",
+    "species": "Humanoid",
+    "type": "Hammerhead-Person",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/152.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10",
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/152",
+    "created": "2017-12-29T15:20:16.842Z"
+  },
+  {
+    "id": 200,
+    "name": "Lawyer Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/200.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/200",
+    "created": "2017-12-30T12:49:52.971Z"
+  },
+  {
+    "id": 206,
+    "name": "Lizard Morty",
+    "status": "Alive",
+    "species": "Humanoid",
+    "type": "Lizard-Person",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/206.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/206",
+    "created": "2017-12-30T13:06:09.094Z"
+  },
+  {
+    "id": 209,
+    "name": "Long Sleeved Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/209.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/209",
+    "created": "2017-12-30T14:00:06.755Z"
+  },
+  {
+    "id": 217,
+    "name": "Mechanical Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/217.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/23"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/217",
+    "created": "2017-12-30T14:32:17.158Z"
+  },
+  {
+    "id": 229,
+    "name": "Morty Mart Manager Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/229.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/229",
+    "created": "2017-12-30T16:12:33.382Z"
+  },
+  {
+    "id": 230,
+    "name": "Morty Jr.",
+    "status": "Alive",
+    "species": "Humanoid",
+    "type": "Human Gazorpian",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/230.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/7"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/230",
+    "created": "2017-12-30T16:20:51.391Z"
+  },
+  {
+    "id": 231,
+    "name": "Morty Rick",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/231.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/22"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/231",
+    "created": "2017-12-30T16:23:45.894Z"
+  },
+  {
+    "id": 232,
+    "name": "Morty Smith",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Evil Rick's Target Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/34"
+    },
+    "location": {
+      "name": "Earth (Evil Rick's Target Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/34"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/232.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/232",
+    "created": "2017-12-30T16:29:27.863Z"
+  },
+  {
+    "id": 233,
+    "name": "Morty K-22",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (K-22)",
+      "url": "https://rickandmortyapi.com/api/location/52"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/233.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/233",
+    "created": "2017-12-30T16:33:49.577Z"
+  },
+  {
+    "id": 234,
+    "name": "Morty Smith",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/234.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/6"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/234",
+    "created": "2017-12-30T16:35:01.223Z"
+  },
+  {
+    "id": 235,
+    "name": "Mortytown Loco",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/235.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/235",
+    "created": "2017-12-30T16:37:07.150Z"
+  },
+  {
+    "id": 298,
+    "name": "Robot Morty",
+    "status": "unknown",
+    "species": "Robot",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/298.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/298",
+    "created": "2017-12-31T20:37:30.747Z"
+  },
+  {
+    "id": 325,
+    "name": "Slick Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/325.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/325",
+    "created": "2018-01-10T16:06:48.366Z"
+  },
+  {
+    "id": 359,
+    "name": "Tortured Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/359.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/10"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/359",
+    "created": "2018-01-10T18:14:50.992Z"
+  },
+  {
+    "id": 360,
+    "name": "Toxic Morty",
+    "status": "Dead",
+    "species": "Humanoid",
+    "type": "Morty's toxic side",
+    "gender": "Male",
+    "origin": {
+      "name": "Detoxifier",
+      "url": "https://rickandmortyapi.com/api/location/64"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/360.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/27"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/360",
+    "created": "2018-01-10T18:18:05.422Z"
+  },
+  {
+    "id": 366,
+    "name": "Trunk Morty",
+    "status": "Alive",
+    "species": "Humanoid",
+    "type": "Trunk-Person",
+    "gender": "Male",
+    "origin": {
+      "name": "Trunk World",
+      "url": "https://rickandmortyapi.com/api/location/65"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/366.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/366",
+    "created": "2018-01-10T19:03:13.558Z"
+  },
+  {
+    "id": 392,
+    "name": "Bearded Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/392.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28",
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/392",
+    "created": "2018-01-14T14:48:05.977Z"
+  },
+  {
+    "id": 401,
+    "name": "Morty Jr's interviewer",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/401.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/7"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/401",
+    "created": "2018-04-15T17:43:56.832Z"
+  },
+  {
+    "id": 473,
+    "name": "Bartender Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/473.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/473",
+    "created": "2018-05-22T17:14:41.628Z"
+  },
+  {
+    "id": 474,
+    "name": "Dancer Cowboy Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/474.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/474",
+    "created": "2018-05-22T17:17:10.102Z"
+  },
+  {
+    "id": 475,
+    "name": "Dancer Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/475.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/475",
+    "created": "2018-05-22T17:17:49.270Z"
+  },
+  {
+    "id": 476,
+    "name": "Flower Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "Human with a flower in his head",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/476.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/476",
+    "created": "2018-05-22T17:18:46.129Z"
+  },
+  {
+    "id": 480,
+    "name": "Purple Morty",
+    "status": "Alive",
+    "species": "Alien",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/480.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/28"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/480",
+    "created": "2018-05-22T17:24:38.571Z"
+  },
+  {
+    "id": 499,
+    "name": "Fascist Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Fascist Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/77"
+    },
+    "location": {
+      "name": "Earth (Fascist Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/77"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/499.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/32"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/499",
+    "created": "2020-05-02T11:24:36.156Z"
+  },
+  {
+    "id": 505,
+    "name": "Fascist Shrimp Morty",
+    "status": "Alive",
+    "species": "Animal",
+    "type": "Shrimp",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Fascist Shrimp Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/80"
+    },
+    "location": {
+      "name": "Earth (Fascist Shrimp Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/80"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/505.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/32"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/505",
+    "created": "2020-05-02T12:11:23.379Z"
+  },
+  {
+    "id": 512,
+    "name": "Morty’s Lawyer",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/512.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/32"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/512",
+    "created": "2020-05-02T12:25:59.290Z"
+  },
+  {
+    "id": 518,
+    "name": "Wasp Morty",
+    "status": "Alive",
+    "species": "Animal",
+    "type": "Wasp",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Wasp Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/82"
+    },
+    "location": {
+      "name": "Earth (Wasp Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/82"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/518.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/32"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/518",
+    "created": "2020-05-02T12:39:50.688Z"
+  },
+  {
+    "id": 630,
+    "name": "Morty Smith",
+    "status": "Alive",
+    "species": "Human",
+    "type": "Soulless Puppet",
+    "gender": "Male",
+    "origin": {
+      "name": "Story Train",
+      "url": "https://rickandmortyapi.com/api/location/96"
+    },
+    "location": {
+      "name": "Story Train",
+      "url": "https://rickandmortyapi.com/api/location/96"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/630.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/37"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/630",
+    "created": "2020-08-06T16:38:30.136Z"
+  },
+  {
+    "id": 636,
+    "name": "Evil Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "Soulless Puppet",
+    "gender": "Male",
+    "origin": {
+      "name": "Ricks’s Story",
+      "url": "https://rickandmortyapi.com/api/location/100"
+    },
+    "location": {
+      "name": "Ricks’s Story",
+      "url": "https://rickandmortyapi.com/api/location/100"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/636.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/37"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/636",
+    "created": "2020-08-06T16:45:03.209Z"
+  },
+  {
+    "id": 637,
+    "name": "Morty’s Disguise",
+    "status": "Alive",
+    "species": "Human",
+    "type": "Soulless Puppet",
+    "gender": "Female",
+    "origin": {
+      "name": "Story Train",
+      "url": "https://rickandmortyapi.com/api/location/96"
+    },
+    "location": {
+      "name": "Story Train",
+      "url": "https://rickandmortyapi.com/api/location/96"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/637.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/37"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/637",
+    "created": "2020-08-06T16:49:30.253Z"
+  },
+  {
+    "id": 659,
+    "name": "Morty’s Father-in-law",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Near-Duplicate Reality",
+      "url": "https://rickandmortyapi.com/api/location/104"
+    },
+    "location": {
+      "name": "Near-Duplicate Reality",
+      "url": "https://rickandmortyapi.com/api/location/104"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/659.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/39"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/659",
+    "created": "2020-08-13T11:23:55.003Z"
+  },
+  {
+    "id": 660,
+    "name": "Morty’s Mother-in-law",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Female",
+    "origin": {
+      "name": "Near-Duplicate Reality",
+      "url": "https://rickandmortyapi.com/api/location/104"
+    },
+    "location": {
+      "name": "Near-Duplicate Reality",
+      "url": "https://rickandmortyapi.com/api/location/104"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/660.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/39"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/660",
+    "created": "2020-08-13T11:25:50.784Z"
+  },
+  {
+    "id": 661,
+    "name": "Morty’s Girlfriend",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Female",
+    "origin": {
+      "name": "Near-Duplicate Reality",
+      "url": "https://rickandmortyapi.com/api/location/104"
+    },
+    "location": {
+      "name": "Merged Universe",
+      "url": "https://rickandmortyapi.com/api/location/103"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/661.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/39"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/661",
+    "created": "2020-08-13T11:27:29.357Z"
+  },
+  {
+    "id": 685,
+    "name": "Evolved Narnian Disguised as Morty",
+    "status": "Alive",
+    "species": "Humanoid",
+    "type": "Narnian",
+    "gender": "Male",
+    "origin": {
+      "name": "Narnia Dimension",
+      "url": "https://rickandmortyapi.com/api/location/110"
+    },
+    "location": {
+      "name": "Narnia Dimension",
+      "url": "https://rickandmortyapi.com/api/location/110"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/685.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/42"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/685",
+    "created": "2021-10-16T13:49:32.393Z"
+  },
+  {
+    "id": 690,
+    "name": "Scarecrow Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "Decoy",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/690.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/43"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/690",
+    "created": "2021-10-16T15:22:35.204Z"
+  },
+  {
+    "id": 696,
+    "name": "Glockenspiel Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "Decoy",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/696.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/43"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/696",
+    "created": "2021-10-16T15:37:40.381Z"
+  },
+  {
+    "id": 699,
+    "name": "Wicker Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "Decoy",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/699.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/43"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/699",
+    "created": "2021-10-16T15:41:28.941Z"
+  },
+  {
+    "id": 706,
+    "name": "Squid Costume Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "Decoy",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/706.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/43"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/706",
+    "created": "2021-10-16T16:01:02.238Z"
+  },
+  {
+    "id": 715,
+    "name": "Too Cute to Murder Morty",
+    "status": "Dead",
+    "species": "Robot",
+    "type": "Decoy",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/715.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/43"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/715",
+    "created": "2021-10-17T09:42:15.208Z"
+  },
+  {
+    "id": 759,
+    "name": "Turkey Morty",
+    "status": "Alive",
+    "species": "Animal",
+    "type": "Turkey",
+    "gender": "Male",
+    "origin": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "location": {
+      "name": "Earth (Replacement Dimension)",
+      "url": "https://rickandmortyapi.com/api/location/20"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/759.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/47"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/759",
+    "created": "2021-10-17T15:01:58.524Z"
+  },
+  {
+    "id": 801,
+    "name": "7+7 Years Old Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/801.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/801",
+    "created": "2021-11-02T13:12:26.860Z"
+  },
+  {
+    "id": 802,
+    "name": "26 Years Old Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/802.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/802",
+    "created": "2021-11-02T13:12:42.408Z"
+  },
+  {
+    "id": 803,
+    "name": "40 Years Old Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/803.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/803",
+    "created": "2021-11-02T13:13:51.515Z"
+  },
+  {
+    "id": 805,
+    "name": "Baby Mouse Skin Morty",
+    "status": "Alive",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/805.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/805",
+    "created": "2021-11-02T13:31:17.973Z"
+  },
+  {
+    "id": 811,
+    "name": "Re-Build-a-Morty Morty",
+    "status": "unknown",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/811.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/811",
+    "created": "2021-11-02T14:06:40.357Z"
+  },
+  {
+    "id": 812,
+    "name": "Deformed Morty",
+    "status": "Dead",
+    "species": "Humanoid",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/812.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/812",
+    "created": "2021-11-02T14:07:57.818Z"
+  },
+  {
+    "id": 820,
+    "name": "Redhead Morty",
+    "status": "Dead",
+    "species": "Human",
+    "type": "",
+    "gender": "Male",
+    "origin": {
+      "name": "unknown",
+      "url": ""
+    },
+    "location": {
+      "name": "Citadel of Ricks",
+      "url": "https://rickandmortyapi.com/api/location/3"
+    },
+    "image": "https://rickandmortyapi.com/api/character/avatar/820.jpeg",
+    "episode": [
+      "https://rickandmortyapi.com/api/episode/51"
+    ],
+    "url": "https://rickandmortyapi.com/api/character/820",
+    "created": "2021-11-02T15:27:02.303Z"
+  }
+]
