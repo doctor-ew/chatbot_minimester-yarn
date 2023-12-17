@@ -16,8 +16,9 @@ interface Morty {
 }
 
 // Initialize Apollo Client
+//    link: new HttpLink({ uri: 'https://mms-graph.doctorew.com/rickmorty' }),
 const apolloClient = new ApolloClient({
-    link: new HttpLink({ uri: 'https://mms-graph.doctorew.com/rickmorty' }),
+    link: new HttpLink({ uri: 'http://local.doctorew.com:4000/rickmorty' }),
     cache: new InMemoryCache(),
 });
 
