@@ -4,6 +4,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@media (max-width: 768px) {
+  .grid, .flex.flex-col {
+    /* Adjustments for smaller screens */
+  }
+}
 
 :root {
   --max-width: 1100px;
@@ -54,4 +59,58 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+main {
+  transition: transform 0.3s ease, opacity 0.3s ease, background-size 0.3s ease;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Adjustments for smooth scrolling */
+.grid {
+  transition: transform 0.3s ease;
+}
+
+.flex.flex-col {
+  transition: transform 0.3s ease;
+}
+#sectionPin {
+  height: 150vh; /* Adjust as needed for the scrolling duration */
+  overflow: visible;
+}
+
+.pin-wrap-sticky {
+  height: 100vh;
+  width: 100vw;
+  position: sticky;
+  top: 0;
+  overflow-x: hidden;
+}
+
+.pin-wrap.horizontal {
+  height: 100vh;
+  width: 250vmax; /* Adjust width to accommodate all items */
+  display: flex; /* Display items in a row */
+  align-items: center; /* Center items vertically */
+  justify-content: start; /* Start alignment horizontally */
+  gap: 1rem; /* Adjust gap between items */
+}
+
+.pin-wrap.vertical {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns grid */
+  gap: 1rem; /* Adjust gap between items */
+}
+
+@keyframes moveHorizontal {
+  to {
+    transform: translateX(calc(-100% + 100vw));
+  }
+}
+
+.horizontal {
+  will-change: transform;
+  animation: moveHorizontal 10s linear forwards; /* Adjust duration as needed */
 }
