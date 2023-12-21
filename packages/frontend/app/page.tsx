@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { apolloClient } from '../lib/apolloClient';
 import { useQuery } from '@apollo/client';
 import Card from '../components/Card';
@@ -10,10 +10,9 @@ import "./globals.css";
 
 const RickAndMortyPage = () => {
     const [morties, setMorties] = useState<PocketMortyEdge[]>([]);
-    const [displayedMorties, setDisplayedMorties] = useState<PocketMortyEdge[]>([]);
     const [endCursor, setEndCursor] = useState<string | null>(null);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [loadCount, setLoadCount] = useState(0);
-    const mainRef = useRef(null);
 
     const { loading, error, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
         variables: { first: 9, after: null },
@@ -22,81 +21,93 @@ const RickAndMortyPage = () => {
             if (data?.pocketMorties?.edges) {
                 setMorties(data.pocketMorties.edges);
                 setEndCursor(data.pocketMorties.pageInfo.endCursor);
-                setLoadCount(1); // Set load count to 1 after initial load
-                // Initially display only the first set
-                setDisplayedMorties(data.pocketMorties.edges.slice(0, 9));
             }
         }
     });
 
     const loadMoreMorties = useCallback(() => {
-        if (!endCursor || loading) return;
+        if (!endCursor || isLoadingMore || loading) return;
 
+        setIsLoadingMore(true);
         fetchMore({
             variables: { after: endCursor },
         }).then((fetchMoreResult: any) => {
             const newMorties = fetchMoreResult.data.pocketMorties as PocketMortyConnection;
             if (newMorties && newMorties.edges) {
                 setMorties(prevMorties => [...prevMorties, ...newMorties.edges]);
-                setEndCursor(newMorties.pageInfo.endCursor);
-                setLoadCount(prevCount => prevCount + 1);
+                setIsLoadingMore(false);
             }
+            setEndCursor(fetchMoreResult.data.pocketMorties.pageInfo.endCursor);
+            setLoadCount(prevCount => prevCount + 1);
         });
-    }, [endCursor, loading, fetchMore]);
+    }, [endCursor, isLoadingMore, loading, fetchMore]);
 
-    // Load the second set when the user scrolls to the end of the first set
     useEffect(() => {
+        let isScrolling;
+
         const handleScroll = () => {
-            const scrollHeight = mainRef.current.scrollHeight - window.innerHeight;
-            const scrollTop = window.pageYOffset;
-            const scrollPercent = scrollTop / scrollHeight;
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-                if (loadCount === 1) {
-                    // Display the second set
-                    setDisplayedMorties(morties);
-                } else {
-                    loadMoreMorties();
-                }
+            window.clearTimeout(isScrolling);
+
+            // Check if the user has scrolled to the bottom of the page
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoadingMore) {
+                loadMoreMorties();
             }
+
+            // Apply spin class to all odd-numbered Morties on scroll
+            morties.forEach(({ node }, index) => {
+                if (index % 2 !== 0) {
+                    const imageElement = document.getElementById(`morty-image-${node.id}`);
+                    if (imageElement) {
+                        imageElement.style.transform = `rotate(${window.scrollY % 360}deg)`;
+                    }
+                }
+            });
+
+            isScrolling = setTimeout(() => {
+                morties.forEach(({ node }, index) => {
+                    if (index % 2 !== 0) {
+                        const imageElement = document.getElementById(`morty-image-${node.id}`);
+                        if (imageElement) {
+                            imageElement.classList.remove('spin');
+                        }
+                    }
+                });
+            }, 66); // Adjust time as needed
         };
 
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [loadMoreMorties, loadCount, morties]);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (isScrolling) {
+                clearTimeout(isScrolling);
+            }
+        };
+    }, [morties, loadMoreMorties, isLoadingMore]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
-    const isHorizontalScroll = loadCount % 2 === 0 && loadCount !== 0;
-
     return (
-        <main ref={mainRef} className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <div className="mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-6">Pocket Morties</h1>
-
-                {/* Section for pinning and horizontal scrolling */}
-                <section id="sectionPin" className={isHorizontalScroll ? 'horizontal-scroll-section' : ''}>
-                    <div className="pin-wrap-sticky">
-                        <div className="pin-wrap">
-                            {displayedMorties.map(({ node }, index) => (
-                                <Card
-                                    className="card"
-                                    key={`${loadCount}-${node.id}-${index}`}
-                                    title={node.name}
-                                    href={`/morty/${node.id}`}
-                                    imageSrc={`https://pocketmortys.net/media/com_pocketmortys/assets/${node.assetid}Front.png`}
-                                    imageAlt={node.name}
-                                    type={node.type}
-                                    basehp={node.basehp}
-                                    baseatk={node.baseatk}
-                                    // ... other props
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {loading && <p>Loading more...</p>}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {morties.map(({ node }, index) => (
+                        <Card
+                            className="bg-white rounded-lg shadow-md p-4"
+                            key={`${loadCount}-${node.id}-${index}`}
+                            title={node.name}
+                            href={`/morty/${node.id}`}
+                            imageSrc={`https://pocketmortys.net/media/com_pocketmortys/assets/${node.assetid}Front.png`}
+                            imageAlt={node.name}
+                            imageId={`morty-image-${node.id}`}
+                            type={node.type}
+                            basehp={node.basehp}
+                            baseatk={node.baseatk}
+                        />
+                    ))}
+                </div>
+                {isLoadingMore && <p>Loading more...</p>}
             </div>
         </main>
     );

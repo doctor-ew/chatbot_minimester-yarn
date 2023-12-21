@@ -1,5 +1,3 @@
-/* /apps/web/app/globals.css */
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -14,8 +12,8 @@
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+  "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
@@ -27,10 +25,10 @@
   --card-border-rgb: 200, 200, 200;
 
   --glow-conic: conic-gradient(
-    from 180deg at 50% 50%,
-    #2a8af6 0deg,
-    #a853ba 180deg,
-    #e92a67 360deg
+          from 180deg at 50% 50%,
+          #2a8af6 0deg,
+          #a853ba 180deg,
+          #e92a67 360deg
   );
 }
 
@@ -49,11 +47,10 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+          to bottom,
+          transparent,
+          rgb(var(--background-end-rgb))
+  ) rgb(var(--background-start-rgb));
 }
 
 a {
@@ -76,41 +73,25 @@ main {
 .flex.flex-col {
   transition: transform 0.3s ease;
 }
-#sectionPin {
-  height: 150vh; /* Adjust as needed for the scrolling duration */
-  overflow: visible;
-}
 
-.pin-wrap-sticky {
-  height: 100vh;
-  width: 100vw;
-  position: sticky;
-  top: 0;
-  overflow-x: hidden;
-}
-
-.pin-wrap.horizontal {
-  height: 100vh;
-  width: 250vmax; /* Adjust width to accommodate all items */
-  display: flex; /* Display items in a row */
-  align-items: center; /* Center items vertically */
-  justify-content: start; /* Start alignment horizontally */
-  gap: 1rem; /* Adjust gap between items */
-}
-
-.pin-wrap.vertical {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns grid */
-  gap: 1rem; /* Adjust gap between items */
-}
-
-@keyframes moveHorizontal {
-  to {
-    transform: translateX(calc(-100% + 100vw));
+/* Spinning Animation */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-.horizontal {
-  will-change: transform;
-  animation: moveHorizontal 10s linear forwards; /* Adjust duration as needed */
+.spin {
+  animation: spin 2s linear infinite;
+}
+
+.rotate-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+.spin-once {
+  animation: spin 0.5s linear forwards;
 }
