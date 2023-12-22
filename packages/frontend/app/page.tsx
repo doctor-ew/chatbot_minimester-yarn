@@ -12,15 +12,18 @@ const RickAndMortyPage = () => {
     const [morties, setMorties] = useState<PocketMortyEdge[]>([]);
     const [endCursor, setEndCursor] = useState<string | null>(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [totalMortiesLoaded, setTotalMortiesLoaded] = useState(0);
     const [loadCount, setLoadCount] = useState(0);
 
     const { loading, error, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
-        variables: { first: 9, after: null },
+        variables: { first: 12, after: null },
         client: apolloClient,
+        fetchPolicy: 'network-only',
         onCompleted: (data: any) => {
             if (data?.pocketMorties?.edges) {
                 setMorties(data.pocketMorties.edges);
                 setEndCursor(data.pocketMorties.pageInfo.endCursor);
+                setTotalMortiesLoaded(data.pocketMorties.edges.length);
             }
         }
     });
@@ -35,6 +38,7 @@ const RickAndMortyPage = () => {
             const newMorties = fetchMoreResult.data.pocketMorties as PocketMortyConnection;
             if (newMorties && newMorties.edges) {
                 setMorties(prevMorties => [...prevMorties, ...newMorties.edges]);
+                setTotalMortiesLoaded(prev => prev + newMorties.edges.length);
                 setIsLoadingMore(false);
             }
             setEndCursor(fetchMoreResult.data.pocketMorties.pageInfo.endCursor);
@@ -43,19 +47,27 @@ const RickAndMortyPage = () => {
     }, [endCursor, isLoadingMore, loading, fetchMore]);
 
     useEffect(() => {
+        const handleScroll = () => {
+            // Check if the user has scrolled to the bottom of the page
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoadingMore) {
+                loadMoreMorties();
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [loadMoreMorties, isLoadingMore]);
+
+    useEffect(() => {
         let isScrolling;
 
         const handleScroll = () => {
             window.clearTimeout(isScrolling);
 
-            // Check if the user has scrolled to the bottom of the page
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoadingMore) {
-                loadMoreMorties();
-            }
-
-            // Apply spin class to all odd-numbered Morties on scroll
             morties.forEach(({ node }, index) => {
-                if (index % 2 !== 0) {
+                // Calculate the index within the current set of 12 Morties
+                const setIndex = index % 12;
+                if (setIndex % 2 !== 0) {
                     const imageElement = document.getElementById(`morty-image-${node.id}`);
                     if (imageElement) {
                         imageElement.style.transform = `rotate(${window.scrollY % 360}deg)`;
@@ -65,14 +77,18 @@ const RickAndMortyPage = () => {
 
             isScrolling = setTimeout(() => {
                 morties.forEach(({ node }, index) => {
-                    if (index % 2 !== 0) {
+                    // Calculate the index within the current set of 12 Morties
+                    const setIndex = index % 12;
+                    if (setIndex % 2 !== 0) {
                         const imageElement = document.getElementById(`morty-image-${node.id}`);
                         if (imageElement) {
-                            imageElement.classList.remove('spin');
+                            // Keep the current rotation angle
+                            const currentRotation = window.scrollY % 360;
+                            imageElement.style.transform = `rotate(${currentRotation}deg)`;
                         }
                     }
                 });
-            }, 66); // Adjust time as needed
+            }, 66);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -82,7 +98,7 @@ const RickAndMortyPage = () => {
                 clearTimeout(isScrolling);
             }
         };
-    }, [morties, loadMoreMorties, isLoadingMore]);
+    }, [morties, totalMortiesLoaded]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
@@ -95,8 +111,8 @@ const RickAndMortyPage = () => {
                     {morties.map(({ node }, index) => (
                         <Card
                             className="bg-white rounded-lg shadow-md p-4"
-                            key={`${loadCount}-${node.id}-${index}`}
-                            title={node.name}
+                            key={`${loadCount}-${totalMortiesLoaded}-${node.id}-${index}`}
+                            title={`${node.name} :: ${node.id}--${endCursor}--${loadCount}-${totalMortiesLoaded}-${index}`}
                             href={`/morty/${node.id}`}
                             imageSrc={`https://pocketmortys.net/media/com_pocketmortys/assets/${node.assetid}Front.png`}
                             imageAlt={node.name}
