@@ -7,18 +7,19 @@ interface CardProps {
     href: string;
     imageSrc: string;
     imageAlt: string;
+    imageId: string;
     type: string;
     basehp: number;
     baseatk: number;
 }
 
 const Card = ({
-                  className, title, href, imageSrc, imageAlt, type, basehp, baseatk
+                  className, title, href, imageSrc, imageAlt, imageId, type, basehp, baseatk
               }: CardProps) => (
     <div className={`bg-gray-200 rounded-lg overflow-hidden ${className}`}>
         <a href={href}>
             <div className="relative h-64">
-                <Image src={imageSrc} alt={imageAlt} width={90} height={195}/>
+                <Image id={imageId} src={imageSrc} alt={imageAlt} width={90} height={195}/>
             </div>
             <h2 className="text-lg font-bold">{title}</h2>
             <div>Type: {type}</div>

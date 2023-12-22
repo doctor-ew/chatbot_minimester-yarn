@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import {apolloClient} from '../lib/apolloClient';
+import { apolloClient } from '../lib/apolloClient';
 import { useQuery } from '@apollo/client';
 import Card from '../components/Card';
 import { GET_POCKET_MORTIES_QUERY } from '../lib/graphqlQueries';
@@ -11,47 +11,96 @@ import "./globals.css";
 const RickAndMortyPage = () => {
     const [morties, setMorties] = useState<PocketMortyEdge[]>([]);
     const [endCursor, setEndCursor] = useState<string | null>(null);
-    const { loading, error, data, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
-        variables: { first: 9, after: null },
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [totalMortiesLoaded, setTotalMortiesLoaded] = useState(0);
+    const [loadCount, setLoadCount] = useState(0);
+
+    const { loading, error, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
+        variables: { first: 12, after: null },
         client: apolloClient,
-        onCompleted: (data:any) => {
+        fetchPolicy: 'network-only',
+        onCompleted: (data: any) => {
             if (data?.pocketMorties?.edges) {
                 setMorties(data.pocketMorties.edges);
                 setEndCursor(data.pocketMorties.pageInfo.endCursor);
+                setTotalMortiesLoaded(data.pocketMorties.edges.length);
             }
-
         }
     });
 
     const loadMoreMorties = useCallback(() => {
-        if (!endCursor || loading) return;
+        if (!endCursor || isLoadingMore || loading) return;
 
+        setIsLoadingMore(true);
         fetchMore({
             variables: { after: endCursor },
         }).then((fetchMoreResult: any) => {
             const newMorties = fetchMoreResult.data.pocketMorties as PocketMortyConnection;
             if (newMorties && newMorties.edges) {
-                setMorties(prevMorties => [
-                    ...prevMorties,
-                    ...newMorties.edges
-                ]);
-                setEndCursor(newMorties.pageInfo.endCursor);
+                setMorties(prevMorties => [...prevMorties, ...newMorties.edges]);
+                setTotalMortiesLoaded(prev => prev + newMorties.edges.length);
+                setIsLoadingMore(false);
             }
+            setEndCursor(fetchMoreResult.data.pocketMorties.pageInfo.endCursor);
+            setLoadCount(prevCount => prevCount + 1);
         });
-    }, [endCursor, loading, fetchMore]);
+    }, [endCursor, isLoadingMore, loading, fetchMore]);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+            // Check if the user has scrolled to the bottom of the page
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoadingMore) {
                 loadMoreMorties();
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [loadMoreMorties]);
+    }, [loadMoreMorties, isLoadingMore]);
 
-    if (loading && !data) return <p>Loading...</p>;
+    useEffect(() => {
+        let isScrolling;
+
+        const handleScroll = () => {
+            window.clearTimeout(isScrolling);
+
+            morties.forEach(({ node }, index) => {
+                // Calculate the index within the current set of 12 Morties
+                const setIndex = index % 12;
+                if (setIndex % 2 !== 0) {
+                    const imageElement = document.getElementById(`morty-image-${node.id}`);
+                    if (imageElement) {
+                        imageElement.style.transform = `rotate(${window.scrollY % 360}deg)`;
+                    }
+                }
+            });
+
+            isScrolling = setTimeout(() => {
+                morties.forEach(({ node }, index) => {
+                    // Calculate the index within the current set of 12 Morties
+                    const setIndex = index % 12;
+                    if (setIndex % 2 !== 0) {
+                        const imageElement = document.getElementById(`morty-image-${node.id}`);
+                        if (imageElement) {
+                            // Keep the current rotation angle
+                            const currentRotation = window.scrollY % 360;
+                            imageElement.style.transform = `rotate(${currentRotation}deg)`;
+                        }
+                    }
+                });
+            }, 66);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (isScrolling) {
+                clearTimeout(isScrolling);
+            }
+        };
+    }, [morties, totalMortiesLoaded]);
+
+    if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
@@ -59,22 +108,22 @@ const RickAndMortyPage = () => {
             <div className="mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-6">Pocket Morties</h1>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {morties.map(({ node }) => (
+                    {morties.map(({ node }, index) => (
                         <Card
                             className="bg-white rounded-lg shadow-md p-4"
-                            key={node.id}
-                            title={node.name}
+                            key={`${loadCount}-${totalMortiesLoaded}-${node.id}-${index}`}
+                            title={`${node.name} :: ${node.id}--${endCursor}--${loadCount}-${totalMortiesLoaded}-${index}`}
                             href={`/morty/${node.id}`}
                             imageSrc={`https://pocketmortys.net/media/com_pocketmortys/assets/${node.assetid}Front.png`}
                             imageAlt={node.name}
+                            imageId={`morty-image-${node.id}`}
                             type={node.type}
                             basehp={node.basehp}
                             baseatk={node.baseatk}
-                            // ... other properties as needed
                         />
                     ))}
                 </div>
-                {loading && <p>Loading more...</p>}
+                {isLoadingMore && <p>Loading more...</p>}
             </div>
         </main>
     );
