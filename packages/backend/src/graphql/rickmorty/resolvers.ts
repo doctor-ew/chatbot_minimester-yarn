@@ -1,6 +1,7 @@
 // apps/graphql/packages/graphql/rickmorty/resolvers.ts
 
 import axios from 'axios';
+import { fetchSortedMorties,FetchSortedMortiesArgs } from '../../chat/chatHandler'; // Update the import path as needed
 
 // Interfaces for TypeScript type safety
 interface PocketMorty {
@@ -96,6 +97,12 @@ const resolvers = {
             };
 
         },
+
+        sortedMorties: async (_: any, args: FetchSortedMortiesArgs ) => {
+            return fetchSortedMorties({ sortBy: args.sortBy });
+        },
+
+
 
     },
 };
