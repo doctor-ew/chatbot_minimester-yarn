@@ -6,12 +6,15 @@ import {ApolloServer} from 'apollo-server-express';
 import {readFileSync} from 'fs';
 import path from 'path';
 import rickMortyResolvers from './graphql/rickmorty/resolvers';
-import dotenv from 'dotenv';
+import { handleChatRequest } from './chat/chatHandler'; // Update with the correct path
 
-dotenv.config();
 
 const app: express.Application = express();
 const PORT = 4000;
+
+// Use express.json() to parse JSON payloads
+app.use(express.json());
+
 
 // Load type definitions for both endpoints
 const rickMortyTypeDefs = readFileSync(path.join(__dirname, 'graphql/rickmorty/schema.graphql'), 'utf-8');
@@ -87,6 +90,22 @@ const rickMortyServer = new ApolloServer({
     })
 });
 
+// Chat API Route
+app.post('/api/chat', async (req: Request, res: Response) => {
+    console.log('|-r-| req', req);
+    try {
+        const userInput = req.body.query; // Make sure this matches the structure of your incoming request
+        if (!userInput) {
+            return res.status(400).send('Query not provided');
+        }
+
+        const chatResponse = await handleChatRequest(userInput);
+        res.json(chatResponse);
+    } catch (error) {
+        console.error('Error handling chat request:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 // Health Check Endpoint
 app.get('/health', async (req: Request, res: Response) => {

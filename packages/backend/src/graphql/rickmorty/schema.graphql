@@ -51,4 +51,5 @@ type Query {
         sortBy: String
     ): PocketMortyConnection
     pocketMorty(id: Int!): PocketMorty
+    sortedMorties(sortBy: String!): [PocketMortyEdge]
 }
