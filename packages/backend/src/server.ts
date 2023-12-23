@@ -92,7 +92,7 @@ const rickMortyServer = new ApolloServer({
 
 // Chat API Route
 app.post('/api/chat', async (req: Request, res: Response) => {
-    console.log('|-r-| req', req);
+    //console.log('|-r-| req', req);
     try {
         const userInput = req.body.query; // Make sure this matches the structure of your incoming request
         if (!userInput) {
