@@ -99,7 +99,9 @@ const resolvers = {
         },
 
         sortedMorties: async (_: any, args: FetchSortedMortiesArgs) => {
-            return fetchSortedMorties({sortBy: args.sortBy});
+            // Use args.first if provided, otherwise default to 5
+            const first = args.first || 5;
+            return fetchSortedMorties(args, first);
         },
 
         topMortiesByStat: async (_: any, args: { stat: string, first: number }) => {

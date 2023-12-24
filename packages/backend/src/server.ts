@@ -6,7 +6,7 @@ import {ApolloServer} from 'apollo-server-express';
 import {readFileSync} from 'fs';
 import path from 'path';
 import rickMortyResolvers from './graphql/rickmorty/resolvers';
-import { handleJSONAnalysis, handleChatRequestForGraph, handleChatRequest } from './chat/chatHandler';
+import { handleJSONAnalysis, handleChatRequestForGraph, handleChatRequest,generateGraphQLQuery,sendToGraphQLServer,assessGraphQLResponse } from './chat/chatHandler';
 
 const app: express.Application = express();
 const PORT = 4000;
@@ -85,61 +85,72 @@ async function startApolloServer() {
 
 // Call the asynchronous function to start the server
 startApolloServer().then(() => {
-    // Chat API Route for handling GraphQL queries
+
+    // New endpoint for handling user queries
     app.post('/api/chat', async (req: Request, res: Response) => {
         try {
             const { query } = req.body;
 
             if (!query) {
-                return res.status(400).send('GraphQL query not provided');
+                return res.status(400).send('User query not provided');
             }
 
-            const graphqlResponse = await handleChatRequest(query);
-            res.json(graphqlResponse);
+            // Step 1: Generate a GraphQL query using OpenAI
+            const generatedGqlQuery = await generateGraphQLQuery(query);
+
+            // Step 2: Send the GraphQL query to your GraphQL server
+            const graphqlResponse = await sendToGraphQLServer(generatedGqlQuery);
+
+            // Step 3: Receive and process the GraphQL response
+            const assessedResponse = assessGraphQLResponse(graphqlResponse);
+
+            // Step 4: Respond with the assessed result
+            res.json(assessedResponse);
         } catch (error) {
-            console.error('Error handling GraphQL request:', error);
+            console.error('Error handling user query:', error);
             res.status(500).send('Internal Server Error');
         }
     });
 
     app.post('/api/chat/graphql', async (req: Request, res: Response) => {
-        try {
-            const { query } = req.body;
+    try {
+        const { query } = req.body;
 
-            if (!query) {
-                return res.status(400).send('GraphQL query not provided');
-            }
-
-            const graphqlResponse = await handleChatRequestForGraph(query);
-            res.json(graphqlResponse);
-        } catch (error) {
-            console.error('Error handling GraphQL request:', error);
-            res.status(500).send('Internal Server Error');
+        if (!query) {
+            return res.status(400).send('GraphQL query not provided');
         }
-    });
 
-    // Chat API Route for handling JSON analysis
-    app.get('/api/chat/json', async (req: Request, res: Response) => {
-        try {
-            const jsonAnalysisResponse = await handleJSONAnalysis();
-            res.json(jsonAnalysisResponse);
-        } catch (error) {
-            console.error('Error analyzing JSON data:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    });
+        const graphqlResponse = await handleChatRequestForGraph(query);
+        res.json(graphqlResponse);
+    } catch (error) {
+        console.error('Error handling GraphQL request:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
-    // Health Check Endpoint
-    app.get('/health', async (req: Request, res: Response) => {
-        // Update this endpoint to check the health of other services if necessary
-        res.status(200).send('OK');
-    });
+// Chat API Route for handling JSON analysis
+app.get('/api/chat/json', async (req: Request, res: Response) => {
+    try {
+        const jsonAnalysisResponse = await handleJSONAnalysis();
+        res.json(jsonAnalysisResponse);
+    } catch (error) {
+        console.error('Error analyzing JSON data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
-    // Start the server
-    app.listen(PORT, () => {
-        console.log(`Server is running at http://localhost:${PORT}`);
-    });
+// Health Check Endpoint
+app.get('/health', async (req: Request, res: Response) => {
+    // Update this endpoint to check the health of other services if necessary
+    res.status(200).send('OK');
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+});
 }).catch(error => {
     console.error(error);
     process.exit(1);
 });
+
