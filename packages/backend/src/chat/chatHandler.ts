@@ -52,7 +52,21 @@ export async function handleChatRequest(userInput: string): Promise<any> {
             const jsonAnalysisResponse = await handleJSONAnalysis();
 
             return jsonAnalysisResponse;
-        } else {
+        } else if (lowerCaseInput.includes("top morties by")) {
+            // Handle top Morties request by a specific stat
+            const statMatch = lowerCaseInput.match(/top morties by (\w+)/);
+            if (statMatch && statMatch[1]) {
+                const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy']; // Type assertion to valid stat type
+                if (['basehp', 'baseatk', 'basedef', 'basespd', 'basexp', 'stattotal'].includes(stat)) {
+                    const topMorties = await fetchTopMortiesByStat(stat, 5); // Change 5 to the desired count
+                    return { message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}` };
+                } else {
+                    return { message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)." };
+                }
+            } else {
+                return { message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)." };
+            }
+    } else {
             // If the user query doesn't match either condition, use the OpenAI chat model
             const stream = await openai.chat.completions.create({
                 model: "gpt-3.5-turbo",
@@ -76,6 +90,27 @@ export async function handleChatRequest(userInput: string): Promise<any> {
         console.error("Error handling the chat request:", error);
         throw error;
     }
+}
+
+// Add a new function to fetch top Morties by a specific stat
+async function fetchTopMortiesByStat(stat: any, count: number): Promise<any[]> {
+    try {
+        // Implement your logic to fetch the top Morties by the specified stat
+        // You can use the fetchSortedMorties function and filter/slice the result based on the stat
+        // Return the top Morties as an array
+        const sortedMorties = await fetchSortedMorties({ sortBy: stat });
+        return sortedMorties.slice(0, count);
+    } catch (error) {
+        console.error(`Error fetching top Morties by ${stat}:`, error);
+        throw error;
+    }
+}
+
+// Add a function to format the top Morties for display
+function formatTopMorties(topMorties: any[]): any {
+    // Implement your logic to format the top Morties for display as a string
+    // You can include relevant information from the Morties (e.g., name, stat value)
+    // Return the formatted string
 }
 
 export async function handleChatRequestForGraph(userInput: string): Promise<any> {
