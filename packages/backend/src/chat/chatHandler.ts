@@ -257,7 +257,7 @@ export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
         const response = await axios.post('http://localhost:4000/rickmorty', {
             query: gqlQuery,
         });
-        console.log('|-oo-| GraphQL response:', response.data);
+        //console.log('|-oo-| GraphQL response:', response.data);
         return response.data;
     } catch (error) {
         console.error("Error sending GraphQL query to server:", error);
@@ -267,7 +267,7 @@ export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
 
 // Function to assess the GraphQL response and generate a meaningful message
 export function assessGraphQLResponse(graphqlResponse: any): any {
-    console.log('Assessing GraphQL response:', graphqlResponse);
+    //console.log('Assessing GraphQL response:', graphqlResponse);
 
     // Check for errors in the GraphQL response
     if (graphqlResponse.errors) {
@@ -283,7 +283,7 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
 }
 
 function processGraphQLData(data: any): any {
-    console.log('|-o-| Processing GraphQL data:', data);
+    //console.log('|-o-| Processing GraphQL data:', data);
     // Implement the logic to process your GraphQL data and return a meaningful result
     // This could involve formatting the data, extracting specific fields, etc.
 }
