@@ -25,7 +25,9 @@
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "ioredis": "^5.3.2",
-    "node-fetch": "^3.3.2"
+    "langchain": "^0.0.212",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.24.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.130",

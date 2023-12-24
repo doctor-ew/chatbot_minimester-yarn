@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { apolloClient } from '../lib/apolloClient';
 import { useQuery } from '@apollo/client';
 import Card from '../components/Card';
+import ChatBox from '../components/ChatBox';
 import { GET_POCKET_MORTIES_QUERY } from '../lib/graphqlQueries';
 import { PocketMortyConnection, PocketMortyEdge } from '../lib/types';
 import "./globals.css";
@@ -14,6 +15,18 @@ const RickAndMortyPage = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [totalMortiesLoaded, setTotalMortiesLoaded] = useState(0);
     const [loadCount, setLoadCount] = useState(0);
+
+    const handleChatQuery = async (query) => {
+        const response = await fetch('http://localhost:4000/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
+        });
+        const data = await response.json();
+
+        // Execute GraphQL query received from chat
+        // Update the page state based on the received response
+    };
 
     const { loading, error, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
         variables: { first: 12, after: null },
@@ -107,6 +120,7 @@ const RickAndMortyPage = () => {
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <div className="mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-6">Pocket Morties</h1>
+                <ChatBox onSend={handleChatQuery} />
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {morties.map(({ node }, index) => (
                         <Card

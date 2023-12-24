@@ -1,6 +1,7 @@
 // apps/graphql/packages/graphql/rickmorty/resolvers.ts
 
 import axios from 'axios';
+import {fetchSortedMorties, FetchSortedMortiesArgs} from '../../chat/chatHandler'; // Update the import path as needed
 
 // Interfaces for TypeScript type safety
 interface PocketMorty {
@@ -96,6 +97,22 @@ const resolvers = {
             };
 
         },
+
+        sortedMorties: async (_: any, args: FetchSortedMortiesArgs) => {
+            // Use args.first if provided, otherwise default to 5
+            const first = args.first || 5;
+            return fetchSortedMorties(args, first);
+        },
+
+        topMortiesByStat: async (_: any, args: { stat: string, first: number }) => {
+            const data = await fetchData('https://www.doctorew.com/shuttlebay/cleaned_pocket_morties.json');
+
+            // Sort the data by the specified stat (e.g., baseatk) in descending order
+            const sortedData = sortData(data, args.stat).slice(0, args.first);
+
+            return sortedData;
+        },
+
 
     },
 };

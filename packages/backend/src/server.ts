@@ -1,4 +1,4 @@
-// /apps/graphql/packages/server.ts
+// /packages/backend/src/server.ts
 
 import express, {Express, Request, Response, NextFunction} from 'express';
 
@@ -6,22 +6,16 @@ import {ApolloServer} from 'apollo-server-express';
 import {readFileSync} from 'fs';
 import path from 'path';
 import rickMortyResolvers from './graphql/rickmorty/resolvers';
-import travelDataResolvers from './graphql/traveldata/resolvers';
-import {RedisCache} from 'apollo-server-cache-redis';
+import { handleJSONAnalysis, handleChatRequestForGraph, handleChatRequest,generateGraphQLQuery,sendToGraphQLServer,assessGraphQLResponse } from './chat/chatHandler';
 
 const app: express.Application = express();
 const PORT = 4000;
 
-// Load type definitions for both endpoints
-const rickMortyTypeDefs = readFileSync(path.join(__dirname, 'graphql/rickmorty/schema.graphql'), 'utf-8');
-const travelDataTypeDefs = readFileSync(path.join(__dirname, 'graphql/traveldata/schema.graphql'), 'utf-8');
+// Use express.json() to parse JSON payloads
+app.use(express.json());
 
-/*
-const redisCache = new RedisCache({
-    host: 'redis',
-    port: 6379
-});
-*/
+// Load type definitions for the GraphQL endpoint
+const rickMortyTypeDefs = readFileSync(path.join(__dirname, 'graphql/rickmorty/schema.graphql'), 'utf-8');
 
 async function fetchMorties() {
     const response = await fetch('http://localhost:4000/rickmorty', {
@@ -73,29 +67,76 @@ async function fetchMorties() {
 
     return response.json();
 }
-
-
-// Create ApolloServer instances for both endpoints
+// Create ApolloServer instance for the GraphQL endpoint
 const rickMortyServer = new ApolloServer({
     typeDefs: rickMortyTypeDefs,
     resolvers: rickMortyResolvers,
-    //cache: redisCache,
-    context: ({req, res}) => ({
+    context: ({ req, res }) => ({
         req,
         res,
-        //  cache: redisCache,
     })
 });
 
-const travelDataServer = new ApolloServer({
-    typeDefs: travelDataTypeDefs,
-    resolvers: travelDataResolvers,
-    //   cache: redisCache,
-    context: ({req, res}) => ({
-        req,
-        res,
-        //cache: redisCache,
-    })
+// Start Apollo Server
+async function startApolloServer() {
+    await rickMortyServer.start();
+    rickMortyServer.applyMiddleware({ app: app as any, path: '/rickmorty' });
+}
+
+// Call the asynchronous function to start the server
+startApolloServer().then(() => {
+
+    // New endpoint for handling user queries
+    app.post('/api/chat', async (req: Request, res: Response) => {
+        try {
+            const { query } = req.body;
+
+            if (!query) {
+                return res.status(400).send('User query not provided');
+            }
+
+            // Step 1: Generate a GraphQL query using OpenAI
+            const generatedGqlQuery = await generateGraphQLQuery(query);
+
+            // Step 2: Send the GraphQL query to your GraphQL server
+            const graphqlResponse = await sendToGraphQLServer(generatedGqlQuery);
+
+            // Step 3: Receive and process the GraphQL response
+            const assessedResponse = assessGraphQLResponse(graphqlResponse);
+
+            // Step 4: Respond with the assessed result
+            res.json(assessedResponse);
+        } catch (error) {
+            console.error('Error handling user query:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    });
+
+    app.post('/api/chat/graphql', async (req: Request, res: Response) => {
+    try {
+        const { query } = req.body;
+
+        if (!query) {
+            return res.status(400).send('GraphQL query not provided');
+        }
+
+        const graphqlResponse = await handleChatRequestForGraph(query);
+        res.json(graphqlResponse);
+    } catch (error) {
+        console.error('Error handling GraphQL request:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Chat API Route for handling JSON analysis
+app.get('/api/chat/json', async (req: Request, res: Response) => {
+    try {
+        const jsonAnalysisResponse = await handleJSONAnalysis();
+        res.json(jsonAnalysisResponse);
+    } catch (error) {
+        console.error('Error analyzing JSON data:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Health Check Endpoint
@@ -104,30 +145,12 @@ app.get('/health', async (req: Request, res: Response) => {
     res.status(200).send('OK');
 });
 
-
-
-// Create an asynchronous function to start the servers and apply middleware
-async function startServer() {
-    await rickMortyServer.start();
-    rickMortyServer.applyMiddleware({app: app as any, path: '/rickmorty'});
-
-    await travelDataServer.start();
-    travelDataServer.applyMiddleware({app: app as any, path: '/traveldata'});
-
-    app.listen(PORT, () => {
-        console.log(`Rick and Morty GraphQL API available at http://localhost:${PORT}${rickMortyServer.graphqlPath}`);
-        console.log(`Travel Data GraphQL API available at http://localhost:${PORT}${travelDataServer.graphqlPath}`);
-    });
-
-    app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-        console.error(err.stack);
-        res.status(500).send('Something broke!');
-    });
-
-}
-
-// Call the asynchronous function
-startServer().catch(error => {
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+});
+}).catch(error => {
     console.error(error);
     process.exit(1);
 });
+

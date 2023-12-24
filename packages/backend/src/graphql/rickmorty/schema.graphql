@@ -51,4 +51,8 @@ type Query {
         sortBy: String
     ): PocketMortyConnection
     pocketMorty(id: Int!): PocketMorty
+    sortedMorties(sortBy: String!, first: Int): [PocketMortyEdge]
+
+    # Add a new query for retrieving top Morties by a specific stat
+    topMortiesByStat(stat: String!, first: Int!): [PocketMorty]
 }
