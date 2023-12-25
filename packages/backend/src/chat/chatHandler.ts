@@ -13,7 +13,7 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 export interface FetchSortedMortiesArgs {
     first?: number | 5;
-    sortBy: "basehp" | "baseatk" | "basedef" | "basespd" | "basexp" | "stattotal";
+    sortBy: "basehp" | "baseatk" | "basedef" | "basespd" | "basexp" | "stattotal" | "assetid";
 }
 
 async function fetchData(url: string) {
@@ -36,7 +36,10 @@ export const fetchSortedMorties = async (args: FetchSortedMortiesArgs, first: nu
     const sortedData = sortData(data, args.sortBy);
 
     // Slice the data based on the 'first' argument
-    return sortedData.slice(0, first).map((morty) => ({node: morty, cursor: `cursor-${morty.id}`}));
+    return sortedData.slice(0, first).map((morty) => {
+        console.log("Morty with AssetID: ", morty.assetid); // Log to check
+        return {node: morty, cursor: `cursor-${morty.id}`};
+    });
 };
 
 
@@ -205,7 +208,7 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
         Fields: id, name, basehp, baseatk, basedef, basespd, basexp
 
     Example:
-    curl -X POST http://localhost:4000/rickmorty \\
+    curl -X POST http://local.doctorew.com:4000/rickmorty \\
        -H "Content-Type: application/json" \\
        -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\") { node { id name baseatk } cursor } }"}'
     User Request: "${userInput}"
@@ -254,7 +257,7 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
 export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
     console.log('|-oo-| Sending GraphQL query to server:', gqlQuery);
     try {
-        const response = await axios.post('http://localhost:4000/rickmorty', {
+        const response = await axios.post('http://local.doctorew.com:4000/rickmorty', {
             query: gqlQuery,
         });
         //console.log('|-oo-| GraphQL response:', response.data);
@@ -282,9 +285,16 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
     return processedResponse;
 }
 
-function processGraphQLData(data: any): any {
-    //console.log('|-o-| Processing GraphQL data:', data);
-    // Implement the logic to process your GraphQL data and return a meaningful result
-    // This could involve formatting the data, extracting specific fields, etc.
+function processGraphQLData(data:any) {
+    if (!data || !data?.sortedMorties) {
+        return { error: "No data returned" };
+    }
+
+    // Extracting Morties data
+    const morties = data?.sortedMorties.map((edge:any) => edge?.node);
+    console.log('|-O-| Extracted Morties:', morties);
+
+    // Return in a format your frontend expects
+    return { morties };
 }
 

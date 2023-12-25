@@ -1,24 +1,26 @@
 // /packages/backend/src/server.ts
 
 import express, {Express, Request, Response, NextFunction} from 'express';
-
+const cors = require('cors');
 import {ApolloServer} from 'apollo-server-express';
 import {readFileSync} from 'fs';
 import path from 'path';
 import rickMortyResolvers from './graphql/rickmorty/resolvers';
 import { handleJSONAnalysis, handleChatRequestForGraph, handleChatRequest,generateGraphQLQuery,sendToGraphQLServer,assessGraphQLResponse } from './chat/chatHandler';
 
+
 const app: express.Application = express();
 const PORT = 4000;
 
 // Use express.json() to parse JSON payloads
+app.use(cors());
 app.use(express.json());
 
 // Load type definitions for the GraphQL endpoint
 const rickMortyTypeDefs = readFileSync(path.join(__dirname, 'graphql/rickmorty/schema.graphql'), 'utf-8');
 
 async function fetchMorties() {
-    const response = await fetch('http://localhost:4000/rickmorty', {
+    const response = await fetch('http://local.doctorew.com:4000/rickmorty', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

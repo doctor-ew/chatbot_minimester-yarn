@@ -45,6 +45,7 @@ const filterPocketMorties = (data: any[], args: any) => {
             (args.basedef === undefined || morty.basedef === args.basedef) &&
             (args.basespd === undefined || morty.basespd === args.basespd) &&
             (args.stattotal === undefined || morty.stattotal === args.stattotal) &&
+            (args.assetid === undefined || morty.assetid === args.assetid) &&
             (!args.dimensions || args.dimensions.includes(morty.dimensions)) &&
             (!args.where_found || args.where_found.some((location: any) => morty.where_found.includes(location)));
     });
