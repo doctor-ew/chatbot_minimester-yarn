@@ -17,15 +17,33 @@ const RickAndMortyPage = () => {
     const [loadCount, setLoadCount] = useState(0);
 
     const handleChatQuery = async (query) => {
-        const response = await fetch('http://localhost:4000/api/chat', {
+        const response = await fetch('http://local.doctorew.com:4000/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query })
         });
         const data = await response.json();
 
-        // Execute GraphQL query received from chat
-        // Update the page state based on the received response
+        if (data && data.morties) {
+            // Update the morties state with the new data
+            const newMorties = data.morties.map(morty => ({
+                node: {
+                    id: morty.id,
+                    name: morty.name,
+                    baseatk: morty.baseatk,
+                    type: "Unknown", // Placeholder value
+                    basehp: 100, // Placeholder value
+                    assetid: morty.assetid, // Placeholder image ID
+
+                    // Add other properties as needed
+                }
+            }));
+            console.log('|-n-|', newMorties);
+            setMorties(newMorties);
+            // Reset the endCursor and loadCount since we're displaying new data
+            setEndCursor(null);
+            setLoadCount(0);
+        }
     };
 
     const { loading, error, fetchMore } = useQuery<PocketMortyConnection>(GET_POCKET_MORTIES_QUERY, {
