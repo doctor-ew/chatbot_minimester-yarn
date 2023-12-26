@@ -13,6 +13,7 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 export interface FetchSortedMortiesArgs {
     first?: number | 5;
+    last?: number;
     sortBy: "basehp" | "baseatk" | "basedef" | "basespd" | "basexp" | "stattotal" | "assetid";
 }
 
@@ -26,21 +27,35 @@ async function fetchData(url: string) {
     }
 }
 
-const sortData = (data: any[], sortBy: string) => {
+const sortMData = (data: any[], sortBy: string) => {
     return data.sort((a, b) => b[sortBy] - a[sortBy]);
 };
 
-export const fetchSortedMorties = async (args: FetchSortedMortiesArgs, first: number) => {
-    console.log('Fetching sorted Morties with args:', args);
+export const fetchSortedMorties = async (args: FetchSortedMortiesArgs, order: 'asc' | 'desc' = 'desc') => {
     const data = await fetchData("https://www.doctorew.com/shuttlebay/cleaned_pocket_morties.json");
-    const sortedData = sortData(data, args.sortBy);
 
-    // Slice the data based on the 'first' argument
-    return sortedData.slice(0, first).map((morty) => {
-        console.log("Morty with AssetID: ", morty.assetid); // Log to check
-        return {node: morty, cursor: `cursor-${morty.id}`};
-    });
+    let sortedData;
+    if (order === 'asc') {
+        sortedData = sortData(data, args.sortBy, 'asc');
+    } else {
+        sortedData = sortData(data, args.sortBy, 'desc');
+    }
+
+    const first = args.first ?? 5;
+    return sortedData.slice(0, first).map((morty) => ({
+        node: morty,
+        cursor: `cursor-${morty.id}`,
+    }));
 };
+
+const sortData = (data: any[], sortBy: string, order: 'asc' | 'desc' = 'desc') => {
+    if (order === 'asc') {
+        return data.sort((a, b) => a[sortBy] - b[sortBy]);
+    } else {
+        return data.sort((a, b) => b[sortBy] - a[sortBy]);
+    }
+};
+
 
 
 export async function handleChatRequest(userInput: string): Promise<any> {
@@ -49,34 +64,31 @@ export async function handleChatRequest(userInput: string): Promise<any> {
 
         // Check if the user query contains a keyword indicating GraphQL request
         if (lowerCaseInput.includes("graphql")) {
-            // Extract the GraphQL query from the user input
             const gqlQuery = lowerCaseInput.replace("graphql", "").trim();
-
-            // Call the GraphQL handling function with the extracted query
             const graphqlResponse = await handleChatRequestForGraph(gqlQuery);
-
             return graphqlResponse;
         } else if (lowerCaseInput.includes("json")) {
-            // Handle JSON analysis request
             const jsonAnalysisResponse = await handleJSONAnalysis();
-
             return jsonAnalysisResponse;
         } else if (lowerCaseInput.includes("top morties by")) {
-            // Handle top Morties request by a specific stat
             const statMatch = lowerCaseInput.match(/top morties by (\w+)/);
             if (statMatch && statMatch[1]) {
-                const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy']; // Type assertion to valid stat type
-                if (['basehp', 'baseatk', 'basedef', 'basespd', 'basexp', 'stattotal'].includes(stat)) {
-                    const topMorties = await fetchTopMortiesByStat(stat, 5); // Change 5 to the desired count
-                    return {message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}`};
-                } else {
-                    return {message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)."};
-                }
+                const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy'];
+                const topMorties = await fetchTopMortiesByStat(stat, 5);
+                return {message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}`};
             } else {
                 return {message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)."};
             }
+        } else if (lowerCaseInput.includes("worst morties by") || lowerCaseInput.includes("bottom morties by")) {
+            const statMatch = lowerCaseInput.match(/(worst|bottom) morties by (\w+)/);
+            if (statMatch && statMatch[2]) {
+                const stat = statMatch[2].trim() as FetchSortedMortiesArgs['sortBy'];
+                const bottomMorties = await fetchSortedMorties({sortBy: stat, last: 3});
+                return {message: `Here are the bottom 3 Morties by ${stat}:\n${formatTopMorties(bottomMorties)}`};
+            } else {
+                return {message: "Please specify a valid stat for bottom Morties (e.g., bottom Morties by basedef)."};
+            }
         } else {
-            // If the user query doesn't match either condition, use the OpenAI chat model
             const stream = await openai.chat.completions.create({
                 model: "gpt-3.5-turbo",
                 messages: [
@@ -101,7 +113,9 @@ export async function handleChatRequest(userInput: string): Promise<any> {
     }
 }
 
+
 // Add a new function to fetch top Morties by a specific stat
+
 async function fetchTopMortiesByStat(stat: string, count: number): Promise<any[]> {
     try {
         // Ensure 'stat' matches one of the allowed string literals
@@ -111,7 +125,7 @@ async function fetchTopMortiesByStat(stat: string, count: number): Promise<any[]
 
         // Cast 'stat' to the specific union type
         const sortBy = stat as FetchSortedMortiesArgs['sortBy'];
-        const sortedMorties = await fetchSortedMorties({sortBy}, count);
+        const sortedMorties = await fetchSortedMorties({sortBy});
         return sortedMorties.slice(0, count);
     } catch (error) {
         console.error(`Error fetching top Morties by ${stat}:`, error);
@@ -152,7 +166,7 @@ export async function handleJSONAnalysis(): Promise<any> {
         const data = JSON.parse(rawData);
 
         // Perform analysis on the JSON data to find the top 5 Morties with the highest base attack
-        const sortedMorties = sortData(data, 'baseatk').slice(0, 5);
+        const sortedMorties = sortMData(data, 'baseatk').slice(0, 5);
         // Perform analysis on the JSON data
         const analysisResult = analyzeJSONResponse(data);
 

@@ -1,3 +1,5 @@
+// /packages/frontend/lib/types.ts
+
 export interface PocketMorty {
     id: number;
     name: string;
