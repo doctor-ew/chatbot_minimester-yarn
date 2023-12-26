@@ -30,13 +30,18 @@ const RickAndMortyPage = () => {
                 node: {
                     id: morty.id,
                     name: morty.name,
+                    assetid: morty.assetid, // Use actual data
                     baseatk: morty.baseatk,
-                    type: "Unknown", // Placeholder value
-                    basehp: 100, // Placeholder value
-                    assetid: morty.assetid, // Placeholder image ID
-
+                    basedef: morty.basedef,
+                    basehp: morty.basehp, // Use actual data
+                    basespd: morty.basespd,
+                    basexp: morty.basexp,
+                    stattotal: morty.stattotal,
+                    type: morty.type, // Use actual data
                     // Add other properties as needed
                 }
+
+
             }));
             console.log('|-n-|', newMorties);
             setMorties(newMorties);
@@ -152,6 +157,10 @@ const RickAndMortyPage = () => {
                             type={node.type}
                             basehp={node.basehp}
                             baseatk={node.baseatk}
+                            basedef={node.basedef}
+                            basespd={node.basespd}
+                            basexp={node.basexp}
+                            stattotal={node.stattotal}
                         />
                     ))}
                 </div>

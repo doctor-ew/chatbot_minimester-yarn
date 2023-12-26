@@ -11,10 +11,14 @@ interface CardProps {
     type: string;
     basehp: number;
     baseatk: number;
+    basedef: number;
+    basespd: number;
+    basexp: number;
+    stattotal: number;
 }
 
 const Card = ({
-                  className, title, href, imageSrc, imageAlt, imageId, type, basehp, baseatk
+                  className, title, href, imageSrc, imageAlt, imageId, type, basehp, baseatk, basedef, basespd, basexp, stattotal
               }: CardProps) => (
     <div className={`bg-gray-200 rounded-lg overflow-hidden ${className}`}>
         <a href={href}>
@@ -25,9 +29,13 @@ const Card = ({
             <div>Type: {type}</div>
             <div>HP: {basehp}</div>
             <div>Attack: {baseatk}</div>
-            {/* Additional details */}
+            <div>Defense: {basedef}</div>
+            <div>Speed: {basespd}</div>
+            <div>Exp: {basexp}</div>
+            <div>Total Stats: {stattotal}</div>
         </a>
     </div>
 );
+
 
 export default Card;

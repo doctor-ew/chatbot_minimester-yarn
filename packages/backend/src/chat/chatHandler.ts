@@ -201,16 +201,16 @@ function analyzeJSONResponse(data: any): any {
 
 // Function to generate a GraphQL query using OpenAI
 export async function generateGraphQLQuery(userInput: string): Promise<string> {
-    console.log('Generating GraphQL query for user input:', userInput);
+    console.log('|-o-| |-g-| Generating GraphQL query for user input:', userInput);
 
     const openAiPrompt = `
         Convert the following user request into a GraphQL query based on this schema:
-        Fields: id, name, basehp, baseatk, basedef, basespd, basexp
+        Fields: id, name, assetid, basehp, baseatk, basedef, basespd, basexp
 
     Example:
     curl -X POST http://local.doctorew.com:4000/rickmorty \\
        -H "Content-Type: application/json" \\
-       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\") { node { id name baseatk } cursor } }"}'
+       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\") { node { id name, assetid, basehp, baseatk, basedef, basespd, basexp } cursor } }"}'
     User Request: "${userInput}"
     `;
 
