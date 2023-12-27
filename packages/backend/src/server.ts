@@ -6,7 +6,9 @@ import {ApolloServer} from 'apollo-server-express';
 import {readFileSync} from 'fs';
 import path from 'path';
 import rickMortyResolvers from './graphql/rickmorty/resolvers';
-import { handleJSONAnalysis, handleChatRequestForGraph, handleChatRequest,generateGraphQLQuery,sendToGraphQLServer,assessGraphQLResponse } from './chat/chatHandler';
+import { generateGraphQLQuery, sendToGraphQLServer, assessGraphQLResponse } from './chat/chatHandler';
+
+
 
 
 const app: express.Application = express();
@@ -115,35 +117,9 @@ startApolloServer().then(() => {
         }
     });
 
-    app.post('/api/chat/graphql', async (req: Request, res: Response) => {
-    try {
-        const { query } = req.body;
-
-        if (!query) {
-            return res.status(400).send('GraphQL query not provided');
-        }
-
-        console.log("|-o-| calling handleChatRequestForGraph query: ",query);
-        const graphqlResponse = await handleChatRequestForGraph(query);
-        res.json(graphqlResponse);
-        console.log("|-oo-| called handleChatRequestForGraph query: ",graphqlResponse);
-
-    } catch (error) {
-        console.error('Error handling GraphQL request:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 // Chat API Route for handling JSON analysis
-app.get('/api/chat/json', async (req: Request, res: Response) => {
-    try {
-        const jsonAnalysisResponse = await handleJSONAnalysis();
-        res.json(jsonAnalysisResponse);
-    } catch (error) {
-        console.error('Error analyzing JSON data:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
+
 
 // Health Check Endpoint
 app.get('/health', async (req: Request, res: Response) => {
