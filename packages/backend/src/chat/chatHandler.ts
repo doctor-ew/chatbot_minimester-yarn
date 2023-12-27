@@ -13,6 +13,7 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 export interface FetchSortedMortiesArgs {
     first?: number | 5;
+    last?: number;
     sortBy: "basehp" | "baseatk" | "basedef" | "basespd" | "basexp" | "stattotal" | "assetid";
 }
 
@@ -26,62 +27,142 @@ async function fetchData(url: string) {
     }
 }
 
-const sortData = (data: any[], sortBy: string) => {
+const sortMData = (data: any[], sortBy: string) => {
     return data.sort((a, b) => b[sortBy] - a[sortBy]);
 };
 
-export const fetchSortedMorties = async (args: FetchSortedMortiesArgs, first: number) => {
-    console.log('Fetching sorted Morties with args:', args);
+export const fetchSortedMorties = async (args: FetchSortedMortiesArgs) => {
     const data = await fetchData("https://www.doctorew.com/shuttlebay/cleaned_pocket_morties.json");
-    const sortedData = sortData(data, args.sortBy);
 
-    // Slice the data based on the 'first' argument
-    return sortedData.slice(0, first).map((morty) => {
-        console.log("Morty with AssetID: ", morty.assetid); // Log to check
-        return {node: morty, cursor: `cursor-${morty.id}`};
-    });
+    // Determine the sorting order based on the presence of 'first' or 'last'
+    const sortOrder = args.last !== undefined ? 'asc' : 'desc';
+
+    // Sort the data
+    const sortedData = sortData(data, args.sortBy, sortOrder);
+
+    // Determine the number of results to return
+    let results = [];
+    if (args.first !== undefined) {
+        // If 'first' is defined, take the first N items
+        results = sortedData.slice(0, args.first);
+    } else if (args.last !== undefined) {
+        // If 'last' is defined, reverse the sorted data and take the first N items
+        results = sortedData.reverse().slice(0, args.last);
+    } else {
+        // Default case if neither 'first' nor 'last' is defined
+        results = sortedData.slice(0, 5); // Default to 5 items if neither is specified
+    }
+
+    // Map the results to the expected format
+    return results.map((morty) => ({
+        node: morty,
+        cursor: `cursor-${morty.id}`,
+    }));
+};
+
+
+const sortData = (data: any[], sortBy: string, order: 'asc' | 'desc' = 'desc') => {
+    if (order === 'asc') {
+        return data.sort((a, b) => a[sortBy] - b[sortBy]);
+    } else {
+        return data.sort((a, b) => b[sortBy] - a[sortBy]);
+    }
 };
 
 
 export async function handleChatRequest(userInput: string): Promise<any> {
+    console.log("|-0-| |-0-| Handling chat request for user input:", userInput);
     try {
         const lowerCaseInput = userInput.toLowerCase();
 
         // Check if the user query contains a keyword indicating GraphQL request
         if (lowerCaseInput.includes("graphql")) {
-            // Extract the GraphQL query from the user input
+            console.log("|-1-| incl gql");
             const gqlQuery = lowerCaseInput.replace("graphql", "").trim();
-
-            // Call the GraphQL handling function with the extracted query
             const graphqlResponse = await handleChatRequestForGraph(gqlQuery);
-
             return graphqlResponse;
         } else if (lowerCaseInput.includes("json")) {
-            // Handle JSON analysis request
+            console.log("|-2-| incl gql");
             const jsonAnalysisResponse = await handleJSONAnalysis();
-
             return jsonAnalysisResponse;
         } else if (lowerCaseInput.includes("top morties by")) {
-            // Handle top Morties request by a specific stat
+            console.log("|-3-| |-0-| incl top morties");
             const statMatch = lowerCaseInput.match(/top morties by (\w+)/);
             if (statMatch && statMatch[1]) {
-                const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy']; // Type assertion to valid stat type
-                if (['basehp', 'baseatk', 'basedef', 'basespd', 'basexp', 'stattotal'].includes(stat)) {
-                    const topMorties = await fetchTopMortiesByStat(stat, 5); // Change 5 to the desired count
-                    return {message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}`};
-                } else {
-                    return {message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)."};
-                }
+                console.log("|-3-| |-1-| statMatch", statMatch);
+                const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy'];
+                const topMorties = await fetchTopMortiesByStat(stat, 5);
+                return {message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}`};
             } else {
+                console.log("|-3-| |-2-| No statMatch", statMatch);
                 return {message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)."};
             }
+        } else if (lowerCaseInput.includes("worst morties by") || lowerCaseInput.includes("bottom morties by")) {
+            console.log("|-4-| |-0-| incl worst/bottom morties");
+            const statMatch = lowerCaseInput.match(/(worst|bottom) morties by (\w+)/);
+            if (statMatch && statMatch[2]) {
+                console.log("|-4-| |-1-| statMatch", statMatch);
+                const stat = statMatch[2].trim() as FetchSortedMortiesArgs['sortBy'];
+                const bottomMorties = await fetchSortedMorties({sortBy: stat, last: 3});
+                return {message: `Here are the bottom 3 Morties by ${stat}:\n${formatTopMorties(bottomMorties)}`};
+            } else {
+                console.log("|-4-| |-2-| No statMatch", statMatch);
+                return {message: "Please specify a valid stat for bottom Morties (e.g., bottom Morties by basedef)."};
+            }
         } else {
-            // If the user query doesn't match either condition, use the OpenAI chat model
+            console.log("|-5-| incl else");
             const stream = await openai.chat.completions.create({
                 model: "gpt-3.5-turbo",
                 messages: [
-                    {role: "system", content: "Your GraphQL system message here"},
-                    {role: "user", content: userInput},
+                    {
+                        role: "system",
+                        content: `You are a helpful assistant that will translate human language into GraphQL queries based on the following schemas:
+
+            When asked for the top or best in defense:
+            \`\`\`
+            query {
+                sortedMorties(sortBy: "basedef", first: 3) {
+                    node {
+                        id
+                        name
+                        assetid
+                        basehp
+                        baseatk
+                        basedef
+                        basespd
+                        basexp
+                    }
+                    cursor
+                }
+            }
+            \`\`\`
+
+            When asked for the lowest or worst in attack:
+            \`\`\`
+            query {
+                sortedMorties(sortBy: "baseatk", last: 3) {
+                    node {
+                        id
+                        name
+                        assetid
+                        basehp
+                        baseatk
+                        basedef
+                        basespd
+                        basexp
+                    }
+                    cursor
+                }
+            }
+            \`\`\`
+
+            Valid sort fields are: "basehp", "baseatk", "basedef", "basespd", "basexp", "stattotal", "assetid".
+            Translate user requests into corresponding GraphQL queries.`
+                    },
+                    {
+                        role: "user",
+                        content: "Can you show me the worst three Morties in terms of attack?"
+                    }
                 ],
                 max_tokens: 150,
                 stream: true,
@@ -101,7 +182,9 @@ export async function handleChatRequest(userInput: string): Promise<any> {
     }
 }
 
+
 // Add a new function to fetch top Morties by a specific stat
+
 async function fetchTopMortiesByStat(stat: string, count: number): Promise<any[]> {
     try {
         // Ensure 'stat' matches one of the allowed string literals
@@ -111,7 +194,7 @@ async function fetchTopMortiesByStat(stat: string, count: number): Promise<any[]
 
         // Cast 'stat' to the specific union type
         const sortBy = stat as FetchSortedMortiesArgs['sortBy'];
-        const sortedMorties = await fetchSortedMorties({sortBy}, count);
+        const sortedMorties = await fetchSortedMorties({sortBy});
         return sortedMorties.slice(0, count);
     } catch (error) {
         console.error(`Error fetching top Morties by ${stat}:`, error);
@@ -152,7 +235,7 @@ export async function handleJSONAnalysis(): Promise<any> {
         const data = JSON.parse(rawData);
 
         // Perform analysis on the JSON data to find the top 5 Morties with the highest base attack
-        const sortedMorties = sortData(data, 'baseatk').slice(0, 5);
+        const sortedMorties = sortMData(data, 'baseatk').slice(0, 5);
         // Perform analysis on the JSON data
         const analysisResult = analyzeJSONResponse(data);
 
@@ -204,34 +287,46 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
     console.log('|-o-| |-g-| Generating GraphQL query for user input:', userInput);
 
     const openAiPrompt = `
-        Convert the following user request into a GraphQL query based on this schema:
-        Fields: id, name, assetid, basehp, baseatk, basedef, basespd, basexp
+    Translate the following user request into a GraphQL query. Use 'first' for top or best requests and 'last' for worst, lowest, or bottom requests. The fields are: id, name, assetid, basehp, baseatk, basedef, basespd, basexp. 
+    
+    All graph queries require a sortedMorties func call with a sortBy with a string and a first or last designator. The sortBy string can be any of the fields listed above. The first or last designator  is the user-requested number. The graph calls require a node and cursor. The node is the data requested and the cursor is a string. Please use the following format for the query:
 
-    Example:
-    curl -X POST http://local.doctorew.com:4000/rickmorty \\
-       -H "Content-Type: application/json" \\
-       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\") { node { id name, assetid, basehp, baseatk, basedef, basespd, basexp } cursor } }"}'
+    Examples:
+    User Request: "Show the top 3 Morties by base attack"
+    GraphQL Query: "query { sortedMorties(sortBy: \"baseatk\", first: 3){node {...} cursor }}"
+
+    User Request: "Show the worst 5 Morties by base defense"
+    GraphQL Query: "query { sortedMorties(sortBy: \"basedef\", last: 5){node {...} cursor }}"
+
+    Your task is to create similar GraphQL queries based on the user input.
     User Request: "${userInput}"
-    `;
+`;
+
 
     try {
         const stream = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
-                { role: "system", content: openAiPrompt },
-                { role: "user", content: userInput }
+                {role: "system", content: openAiPrompt},
+                {role: "user", content: userInput}
             ],
             max_tokens: 150,
             stream: true,
         });
+        console.log("|-ooo-| openAiPrompt:", openAiPrompt);
+        console.log("|-oOo-| userInput:", userInput);
 
         let gqlQuery = "";
         for await (const chunk of stream) {
             const content = chunk.choices[0]?.delta?.content || "";
             gqlQuery += content;
         }
-        console.log("Raw response from OpenAI:", gqlQuery);
+        console.log("|-oooo-| Raw response from OpenAI:", gqlQuery);
 
+        // Override check for 'worst', 'lowest', or 'bottom'
+        if (userInput.toLowerCase().includes("worst") || userInput.toLowerCase().includes("lowest") || userInput.toLowerCase().includes("least") || userInput.toLowerCase().includes("bottom")) {
+            gqlQuery = gqlQuery.replace("first:", "last:");
+        }
         // Replace incorrect field names if necessary
         const fieldMapping = {
             "attack": "baseatk", // Add other mappings as necessary
@@ -244,7 +339,7 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
             }
         }
 
-        console.log("Generated GraphQL query:", gqlQuery);
+        console.log("|-OO-| Generated GraphQL query:", gqlQuery);
         return gqlQuery;
     } catch (error) {
         console.error("Error in generating GraphQL query:", error);
@@ -275,7 +370,7 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
     // Check for errors in the GraphQL response
     if (graphqlResponse.errors) {
         console.error('GraphQL Errors:', graphqlResponse.errors);
-        return { error: "Error in GraphQL response", details: graphqlResponse.errors };
+        return {error: "Error in GraphQL response", details: graphqlResponse.errors};
     }
 
     // Assuming a successful response, process it as needed
@@ -285,16 +380,16 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
     return processedResponse;
 }
 
-function processGraphQLData(data:any) {
+function processGraphQLData(data: any) {
     if (!data || !data?.sortedMorties) {
-        return { error: "No data returned" };
+        return {error: "No data returned"};
     }
 
     // Extracting Morties data
-    const morties = data?.sortedMorties.map((edge:any) => edge?.node);
+    const morties = data?.sortedMorties.map((edge: any) => edge?.node);
     console.log('|-O-| Extracted Morties:', morties);
 
     // Return in a format your frontend expects
-    return { morties };
+    return {morties};
 }
 

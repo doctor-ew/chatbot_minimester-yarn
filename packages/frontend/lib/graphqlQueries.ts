@@ -1,4 +1,4 @@
-// graphqlQueries.ts
+// /packages/frontend/lib/graphqlQueries.ts
 import { gql } from '@apollo/client';
 
 export const GET_POCKET_MORTIES_QUERY = gql`
