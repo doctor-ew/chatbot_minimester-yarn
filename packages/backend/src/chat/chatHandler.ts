@@ -31,22 +31,35 @@ const sortMData = (data: any[], sortBy: string) => {
     return data.sort((a, b) => b[sortBy] - a[sortBy]);
 };
 
-export const fetchSortedMorties = async (args: FetchSortedMortiesArgs, order: 'asc' | 'desc' = 'desc') => {
+export const fetchSortedMorties = async (args: FetchSortedMortiesArgs) => {
     const data = await fetchData("https://www.doctorew.com/shuttlebay/cleaned_pocket_morties.json");
 
-    let sortedData;
-    if (order === 'asc') {
-        sortedData = sortData(data, args.sortBy, 'asc');
+    // Determine the sorting order based on the presence of 'first' or 'last'
+    const sortOrder = args.last !== undefined ? 'asc' : 'desc';
+
+    // Sort the data
+    const sortedData = sortData(data, args.sortBy, sortOrder);
+
+    // Determine the number of results to return
+    let results = [];
+    if (args.first !== undefined) {
+        // If 'first' is defined, take the first N items
+        results = sortedData.slice(0, args.first);
+    } else if (args.last !== undefined) {
+        // If 'last' is defined, reverse the sorted data and take the first N items
+        results = sortedData.reverse().slice(0, args.last);
     } else {
-        sortedData = sortData(data, args.sortBy, 'desc');
+        // Default case if neither 'first' nor 'last' is defined
+        results = sortedData.slice(0, 5); // Default to 5 items if neither is specified
     }
 
-    const first = args.first ?? 5;
-    return sortedData.slice(0, first).map((morty) => ({
+    // Map the results to the expected format
+    return results.map((morty) => ({
         node: morty,
         cursor: `cursor-${morty.id}`,
     }));
 };
+
 
 const sortData = (data: any[], sortBy: string, order: 'asc' | 'desc' = 'desc') => {
     if (order === 'asc') {
@@ -274,17 +287,21 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
     console.log('|-o-| |-g-| Generating GraphQL query for user input:', userInput);
 
     const openAiPrompt = `
-        Convert the following user request into a GraphQL query based on this schema:
-        Fields: id, name, assetid, basehp, baseatk, basedef, basespd, basexp
-
-    Example:
-    if the user request is: "Can you show me the top (or best) 3 Morties by base attack?" then query for the first 3 morties by attack. If the user request is: "Please show me the worst (or least or bottom) 5 Morties by base defense." then query for the last 5 morties by defense. 
+    Translate the following user request into a GraphQL query. Use 'first' for top or best requests and 'last' for worst, lowest, or bottom requests. The fields are: id, name, assetid, basehp, baseatk, basedef, basespd, basexp. 
     
-    curl -X POST http://local.doctorew.com:4000/rickmorty \\
-       -H "Content-Type: application/json" \\
-       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\", last: 5) { node { id name, assetid, basehp, baseatk, basedef, basespd, basexp } cursor } }"}'
+    All graph queries require a sortedMorties func call with a sortBy with a string and a first or last designator. The sortBy string can be any of the fields listed above. The first or last designator  is the user-requested number. The graph calls require a node and cursor. The node is the data requested and the cursor is a string. Please use the following format for the query:
+
+    Examples:
+    User Request: "Show the top 3 Morties by base attack"
+    GraphQL Query: "query { sortedMorties(sortBy: \"baseatk\", first: 3){node {...} cursor }}"
+
+    User Request: "Show the worst 5 Morties by base defense"
+    GraphQL Query: "query { sortedMorties(sortBy: \"basedef\", last: 5){node {...} cursor }}"
+
+    Your task is to create similar GraphQL queries based on the user input.
     User Request: "${userInput}"
-    `;
+`;
+
 
     try {
         const stream = await openai.chat.completions.create({
@@ -306,6 +323,10 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
         }
         console.log("|-oooo-| Raw response from OpenAI:", gqlQuery);
 
+        // Override check for 'worst', 'lowest', or 'bottom'
+        if (userInput.toLowerCase().includes("worst") || userInput.toLowerCase().includes("lowest") || userInput.toLowerCase().includes("least") || userInput.toLowerCase().includes("bottom")) {
+            gqlQuery = gqlQuery.replace("first:", "last:");
+        }
         // Replace incorrect field names if necessary
         const fieldMapping = {
             "attack": "baseatk", // Add other mappings as necessary
