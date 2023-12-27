@@ -355,13 +355,23 @@ export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
         const response = await axios.post('http://local.doctorew.com:4000/rickmorty', {
             query: gqlQuery,
         });
-        //console.log('|-oo-| GraphQL response:', response.data);
         return response.data;
     } catch (error) {
         console.error("Error sending GraphQL query to server:", error);
-        throw error;
+        if (error.response) {
+            // Server responded with a status code that falls out of the range of 2xx
+            console.error("Server Response:", error.response.data);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error("No response received:", error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error("Error Message:", error.message);
+        }
+        throw new Error('Failed to send GraphQL query');
     }
 }
+
 
 // Function to assess the GraphQL response and generate a meaningful message
 export function assessGraphQLResponse(graphqlResponse: any): any {
