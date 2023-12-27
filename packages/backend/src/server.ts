@@ -90,6 +90,7 @@ startApolloServer().then(() => {
 
     // New endpoint for handling user queries
     app.post('/api/chat', async (req: Request, res: Response) => {
+        console.log("|-00-| 00 calling handleChatRequest query: ",req.body);
         try {
             const { query } = req.body;
 
@@ -122,8 +123,11 @@ startApolloServer().then(() => {
             return res.status(400).send('GraphQL query not provided');
         }
 
+        console.log("|-o-| calling handleChatRequestForGraph query: ",query);
         const graphqlResponse = await handleChatRequestForGraph(query);
         res.json(graphqlResponse);
+        console.log("|-oo-| called handleChatRequestForGraph query: ",graphqlResponse);
+
     } catch (error) {
         console.error('Error handling GraphQL request:', error);
         res.status(500).send('Internal Server Error');

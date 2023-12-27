@@ -57,43 +57,99 @@ const sortData = (data: any[], sortBy: string, order: 'asc' | 'desc' = 'desc') =
 };
 
 
-
 export async function handleChatRequest(userInput: string): Promise<any> {
+    console.log("|-0-| |-0-| Handling chat request for user input:", userInput);
     try {
         const lowerCaseInput = userInput.toLowerCase();
 
         // Check if the user query contains a keyword indicating GraphQL request
         if (lowerCaseInput.includes("graphql")) {
+            console.log("|-1-| incl gql");
             const gqlQuery = lowerCaseInput.replace("graphql", "").trim();
             const graphqlResponse = await handleChatRequestForGraph(gqlQuery);
             return graphqlResponse;
         } else if (lowerCaseInput.includes("json")) {
+            console.log("|-2-| incl gql");
             const jsonAnalysisResponse = await handleJSONAnalysis();
             return jsonAnalysisResponse;
         } else if (lowerCaseInput.includes("top morties by")) {
+            console.log("|-3-| |-0-| incl top morties");
             const statMatch = lowerCaseInput.match(/top morties by (\w+)/);
             if (statMatch && statMatch[1]) {
+                console.log("|-3-| |-1-| statMatch", statMatch);
                 const stat = statMatch[1].trim() as FetchSortedMortiesArgs['sortBy'];
                 const topMorties = await fetchTopMortiesByStat(stat, 5);
                 return {message: `Here are the top Morties by ${stat}:\n${formatTopMorties(topMorties)}`};
             } else {
+                console.log("|-3-| |-2-| No statMatch", statMatch);
                 return {message: "Please specify a valid stat for top Morties (e.g., top Morties by baseatk)."};
             }
         } else if (lowerCaseInput.includes("worst morties by") || lowerCaseInput.includes("bottom morties by")) {
+            console.log("|-4-| |-0-| incl worst/bottom morties");
             const statMatch = lowerCaseInput.match(/(worst|bottom) morties by (\w+)/);
             if (statMatch && statMatch[2]) {
+                console.log("|-4-| |-1-| statMatch", statMatch);
                 const stat = statMatch[2].trim() as FetchSortedMortiesArgs['sortBy'];
                 const bottomMorties = await fetchSortedMorties({sortBy: stat, last: 3});
                 return {message: `Here are the bottom 3 Morties by ${stat}:\n${formatTopMorties(bottomMorties)}`};
             } else {
+                console.log("|-4-| |-2-| No statMatch", statMatch);
                 return {message: "Please specify a valid stat for bottom Morties (e.g., bottom Morties by basedef)."};
             }
         } else {
+            console.log("|-5-| incl else");
             const stream = await openai.chat.completions.create({
                 model: "gpt-3.5-turbo",
                 messages: [
-                    {role: "system", content: "Your GraphQL system message here"},
-                    {role: "user", content: userInput},
+                    {
+                        role: "system",
+                        content: `You are a helpful assistant that will translate human language into GraphQL queries based on the following schemas:
+
+            When asked for the top or best in defense:
+            \`\`\`
+            query {
+                sortedMorties(sortBy: "basedef", first: 3) {
+                    node {
+                        id
+                        name
+                        assetid
+                        basehp
+                        baseatk
+                        basedef
+                        basespd
+                        basexp
+                    }
+                    cursor
+                }
+            }
+            \`\`\`
+
+            When asked for the lowest or worst in attack:
+            \`\`\`
+            query {
+                sortedMorties(sortBy: "baseatk", last: 3) {
+                    node {
+                        id
+                        name
+                        assetid
+                        basehp
+                        baseatk
+                        basedef
+                        basespd
+                        basexp
+                    }
+                    cursor
+                }
+            }
+            \`\`\`
+
+            Valid sort fields are: "basehp", "baseatk", "basedef", "basespd", "basexp", "stattotal", "assetid".
+            Translate user requests into corresponding GraphQL queries.`
+                    },
+                    {
+                        role: "user",
+                        content: "Can you show me the worst three Morties in terms of attack?"
+                    }
                 ],
                 max_tokens: 150,
                 stream: true,
@@ -222,9 +278,11 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
         Fields: id, name, assetid, basehp, baseatk, basedef, basespd, basexp
 
     Example:
+    if the user request is: "Can you show me the top (or best) 3 Morties by base attack?" then query for the first 3 morties by attack. If the user request is: "Please show me the worst (or least or bottom) 5 Morties by base defense." then query for the last 5 morties by defense. 
+    
     curl -X POST http://local.doctorew.com:4000/rickmorty \\
        -H "Content-Type: application/json" \\
-       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\") { node { id name, assetid, basehp, baseatk, basedef, basespd, basexp } cursor } }"}'
+       -d '{"query": "query { sortedMorties(sortBy: \\"baseatk\\", last: 5) { node { id name, assetid, basehp, baseatk, basedef, basespd, basexp } cursor } }"}'
     User Request: "${userInput}"
     `;
 
@@ -232,19 +290,21 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
         const stream = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
-                { role: "system", content: openAiPrompt },
-                { role: "user", content: userInput }
+                {role: "system", content: openAiPrompt},
+                {role: "user", content: userInput}
             ],
             max_tokens: 150,
             stream: true,
         });
+        console.log("|-ooo-| openAiPrompt:", openAiPrompt);
+        console.log("|-oOo-| userInput:", userInput);
 
         let gqlQuery = "";
         for await (const chunk of stream) {
             const content = chunk.choices[0]?.delta?.content || "";
             gqlQuery += content;
         }
-        console.log("Raw response from OpenAI:", gqlQuery);
+        console.log("|-oooo-| Raw response from OpenAI:", gqlQuery);
 
         // Replace incorrect field names if necessary
         const fieldMapping = {
@@ -258,7 +318,7 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
             }
         }
 
-        console.log("Generated GraphQL query:", gqlQuery);
+        console.log("|-OO-| Generated GraphQL query:", gqlQuery);
         return gqlQuery;
     } catch (error) {
         console.error("Error in generating GraphQL query:", error);
@@ -289,7 +349,7 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
     // Check for errors in the GraphQL response
     if (graphqlResponse.errors) {
         console.error('GraphQL Errors:', graphqlResponse.errors);
-        return { error: "Error in GraphQL response", details: graphqlResponse.errors };
+        return {error: "Error in GraphQL response", details: graphqlResponse.errors};
     }
 
     // Assuming a successful response, process it as needed
@@ -299,16 +359,16 @@ export function assessGraphQLResponse(graphqlResponse: any): any {
     return processedResponse;
 }
 
-function processGraphQLData(data:any) {
+function processGraphQLData(data: any) {
     if (!data || !data?.sortedMorties) {
-        return { error: "No data returned" };
+        return {error: "No data returned"};
     }
 
     // Extracting Morties data
-    const morties = data?.sortedMorties.map((edge:any) => edge?.node);
+    const morties = data?.sortedMorties.map((edge: any) => edge?.node);
     console.log('|-O-| Extracted Morties:', morties);
 
     // Return in a format your frontend expects
-    return { morties };
+    return {morties};
 }
 
