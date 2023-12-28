@@ -7,8 +7,23 @@
     /* Adjustments for smaller screens */
   }
 }
-
+/*
+#main-content::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url(https://pocketmortys.net/media/com_pocketmortys/assets/MortyDefaultFront.png) center center no-repeat;
+  background-size: 50%;
+  opacity: 0.5;
+  z-index: -1;
+  transform: rotate(var(--bg-morty-rotation));
+}
+*/
 :root {
+  --bg-morty-rotation: 0deg;
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
