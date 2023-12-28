@@ -15,6 +15,17 @@ const RickAndMortyPage = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [totalMortiesLoaded, setTotalMortiesLoaded] = useState(0);
     const [loadCount, setLoadCount] = useState(0);
+    const [bgMortyAssetId, setBgMortyAssetId] = useState('');
+    const [bgMortyRotation, setBgMortyRotation] = useState(0);
+
+    // Function to update the background Morty image
+    const updateBackgroundMorty = useCallback(() => {
+        if (morties.length) {
+            const setIndex = Math.floor(totalMortiesLoaded / 12) * 12;
+            const randomIndex = Math.floor(Math.random() * Math.min(12, morties.length - setIndex)) + setIndex;
+            setBgMortyAssetId(morties[randomIndex]?.node.assetid);
+        }
+    }, [totalMortiesLoaded, morties]);
 
     const handleChatQuery = async (query) => {
         console.log("|-hcq-|", query);
@@ -84,8 +95,12 @@ const RickAndMortyPage = () => {
     }, [endCursor, isLoadingMore, loading, fetchMore]);
 
     useEffect(() => {
+        // Update the background Morty image on scroll
         const handleScroll = () => {
-            // Check if the user has scrolled to the bottom of the page
+            const rotationAngle = window.scrollY % 360;
+            document.documentElement.style.setProperty('--bg-morty-rotation', `${rotationAngle}deg`);
+
+            // Load more morties at the bottom of the page
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoadingMore) {
                 loadMoreMorties();
             }
@@ -93,7 +108,14 @@ const RickAndMortyPage = () => {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [loadMoreMorties, isLoadingMore]);
+    }, [morties, totalMortiesLoaded]);
+
+    useEffect(() => {
+        // Initial setup for background Morty
+        if (morties.length) {
+            updateBackgroundMorty();
+        }
+    }, [morties, updateBackgroundMorty]);
 
     useEffect(() => {
         let isScrolling;
@@ -112,6 +134,10 @@ const RickAndMortyPage = () => {
                 }
             });
 
+            // Update rotation on scroll
+            const rotation = window.scrollY % 360;
+            setBgMortyRotation(rotation);
+
             isScrolling = setTimeout(() => {
                 morties.forEach(({ node }, index) => {
                     // Calculate the index within the current set of 12 Morties
@@ -129,19 +155,32 @@ const RickAndMortyPage = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (isScrolling) {
-                clearTimeout(isScrolling);
-            }
-        };
+        return () => window.removeEventListener('scroll', handleScroll);
     }, [morties, totalMortiesLoaded]);
+
+    // Define the background image style
+    const bgImageStyle = {
+        backgroundImage: `url(https://pocketmortys.net/media/com_pocketmortys/assets/${bgMortyAssetId}Front.png)`,
+        backgroundSize: '50%', // Adjust the size as needed
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.5,
+        transform: `rotate(${bgMortyRotation}deg)`,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: -1
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <div style={bgImageStyle} id="main-content"/> {/* Background image container */}
             <div className="mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-6">Pocket Morties</h1>
                 <ChatBox onSend={handleChatQuery} />
