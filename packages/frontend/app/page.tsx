@@ -21,11 +21,18 @@ const RickAndMortyPage = () => {
     // Function to update the background Morty image
     const updateBackgroundMorty = useCallback(() => {
         if (morties.length) {
-            const setIndex = Math.floor(totalMortiesLoaded / 12) * 12;
-            const randomIndex = Math.floor(Math.random() * Math.min(12, morties.length - setIndex)) + setIndex;
-            setBgMortyAssetId(morties[randomIndex]?.node.assetid);
+            // Ensure that the random index doesn't exceed the array length
+            const validLength = Math.min(12, morties.length);
+            const randomIndex = Math.floor(Math.random() * validLength);
+
+            // Use nullish coalescing operator to provide a default value
+            const bgmaid = morties[randomIndex]?.node.assetid ?? 'MortyDefault';
+            setBgMortyAssetId(bgmaid);
+
+            console.log('|-ubm-|', randomIndex, morties, bgmaid);
         }
-    }, [totalMortiesLoaded, morties]);
+    }, [morties]);
+
 
     const handleChatQuery = async (query) => {
         console.log("|-hcq-|", query);
@@ -161,7 +168,7 @@ const RickAndMortyPage = () => {
     // Define the background image style
     const bgImageStyle = {
         backgroundImage: `url(https://pocketmortys.net/media/com_pocketmortys/assets/${bgMortyAssetId}Front.png)`,
-        backgroundSize: '50%', // Adjust the size as needed
+        backgroundSize: '25%', // Adjust the size as needed
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -187,7 +194,7 @@ const RickAndMortyPage = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {morties.map(({ node }, index) => (
                         <Card
-                            className="bg-white rounded-lg shadow-md p-4"
+                            className="bg-[#7ad1e3] bg-opacity-80 text-black dark:bg-opacity-80 dark:text-white rounded-lg shadow-md p-4"
                             key={`${loadCount}-${totalMortiesLoaded}-${node.id}-${index}`}
                             title={`${node.name} :: ${node.id}--${endCursor}--${loadCount}-${totalMortiesLoaded}-${index}`}
                             href={`/morty/${node.id}`}

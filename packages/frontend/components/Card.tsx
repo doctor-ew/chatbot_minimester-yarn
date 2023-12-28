@@ -22,8 +22,8 @@ const Card = ({
               }: CardProps) => (
     <div className={`bg-gray-200 rounded-lg overflow-hidden ${className}`}>
         <a href={href}>
-            <div className="relative h-64">
-                <Image id={imageId} src={imageSrc} alt={imageAlt} width={90} height={195}/>
+            <div className="relative h-64 flex justify-center items-center"> {/* Centering the image */}
+                <Image id={imageId} src={imageSrc} alt={imageAlt} layout="intrinsic" width={90} height={195}/>
             </div>
             <h2 className="text-lg font-bold">{title}</h2>
             <div>Type: {type}</div>
