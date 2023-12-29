@@ -1,0 +1,40 @@
+org: doctorew
+app: minimester-graphql
+service: minimester-graph-lambda
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev # default stage
+
+functions:
+  pocketMorty:
+    handler: dist/server-lambda.handler
+    events:
+      - http:
+          path: /rickmorty
+          method: post
+  chat:
+    handler: dist/server-lambda.handler
+    events:
+      - http:
+          path: /api/chat
+          method: post
+
+plugins:
+  - serverless-offline
+  - serverless-domain-manager
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+  customDomain:
+    domainName: mms-graph.doctorew.com
+    stage: ${self:provider.stage}
+    basePath: ''
+    certificateName: '*.doctorew.com'
+    createRoute53Record: true
+    endpointType: 'edge' # Use 'regional' or 'edge' if you prefer an edge-optimized setup
+    securityPolicy: tls_1_2
+
