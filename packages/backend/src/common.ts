@@ -12,14 +12,30 @@ app.use(cors());
 app.use(express.json());
 
 const rickMortyTypeDefs = readFileSync(path.join(__dirname, 'graphql/rickmorty/schema.graphql'), 'utf-8');
-const rickMortyServer = new ApolloServer({
-    typeDefs: rickMortyTypeDefs,
-    resolvers: rickMortyResolvers,
+
+let rickMortyServer;
+let serverStarted = false;
+
+export async function startServer() {
+    console.log('|-o-| Starting server...');
+    if (!serverStarted) {
+        rickMortyServer = new ApolloServer({
+            typeDefs: rickMortyTypeDefs,
+            resolvers: rickMortyResolvers,
+        });
+
+        await rickMortyServer.start();
+        console.log('|-o-| Apollo Server started');
+        rickMortyServer.applyMiddleware({ app, path: '/rickmorty' });
+        serverStarted = true;
+    }
+    // Additional routes
+    app.post('/api/chat', handleChat);
+    app.get('/health', (req, res) => res.status(200).send('OK'));
+}
+
+startServer().catch(error => {
+    console.error('Failed to start the server:', error);
 });
-
-rickMortyServer.applyMiddleware({ app, path: '/rickmorty' });
-
-app.post('/api/chat', handleChat);
-app.get('/health', (req, res) => res.status(200).send('OK'));
 
 export default app;

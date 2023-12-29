@@ -2,7 +2,6 @@
 
 import { OpenAI } from "openai";
 import axios from "axios";
-import fs from 'fs';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -126,7 +125,7 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
 export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
     console.log('|-oo-| Sending GraphQL query to server:', gqlQuery);
     try {
-        const response = await axios.post('http://local.doctorew.com:4000/rickmorty', {
+        const response = await axios.post('http://localhost:4000/dev/rickmorty', {
             query: gqlQuery,
         });
         return response.data;
@@ -179,8 +178,26 @@ function processGraphQLData(data: any) {
     const morties = data?.sortedMorties.map((edge: any) => edge?.node);
     console.log('|-O-| Extracted Morties:', morties);
 
-    // Return in a format your frontend expects
     return {morties};
 }
 
 
+// Function to handle chat requests
+export async function handleChat(req: any, res: any) {
+    try {
+        const userInput = req.body.query; // Extract user input
+        // Generate a GraphQL query using OpenAI
+        const generatedGqlQuery = await generateGraphQLQuery(userInput);
+
+        // Send the GraphQL query to the server
+        const graphqlResponse = await sendToGraphQLServer(generatedGqlQuery);
+
+        // Assess the GraphQL response
+        const assessedResponse = assessGraphQLResponse(graphqlResponse);
+
+        return assessedResponse;
+    } catch (error) {
+        console.error('Error handling user query:', error);
+        return { error: "Failed to handle chat request", details: error };
+    }
+}

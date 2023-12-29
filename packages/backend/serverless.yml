@@ -28,7 +28,7 @@ plugins:
 
 custom:
   serverless-offline:
-    httpPort: 3005
+    httpPort: 4000
   customDomain:
     domainName: mms-graph.doctorew.com
     stage: ${self:provider.stage}
