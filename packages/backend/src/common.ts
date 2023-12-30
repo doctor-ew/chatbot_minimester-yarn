@@ -26,12 +26,12 @@ export async function startServer() {
 
         await rickMortyServer.start();
         console.log('|-o-| Apollo Server started');
-        rickMortyServer.applyMiddleware({ app, path: '/rickmorty' });
+        rickMortyServer.applyMiddleware({ app, path: '/dev/rickmorty' });
         serverStarted = true;
     }
     // Additional routes
-    app.post('/api/chat', handleChat);
-    app.get('/health', (req, res) => res.status(200).send('OK'));
+    app.post('/dev/api/chat', handleChat);
+    app.get('/dev/health', (req, res) => res.status(200).send('OK'));
 }
 
 startServer().catch(error => {

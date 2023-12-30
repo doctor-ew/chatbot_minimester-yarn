@@ -11,12 +11,14 @@ provider:
 functions:
   pocketMorty:
     handler: dist/server-lambda.handler
+    timeout: 30 # Timeout in seconds
     events:
       - http:
           path: /rickmorty
           method: post
   chat:
     handler: dist/server-lambda.handler
+    timeout: 30 # Timeout in seconds
     events:
       - http:
           path: /api/chat
