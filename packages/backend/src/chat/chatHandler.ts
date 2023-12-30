@@ -184,6 +184,7 @@ function processGraphQLData(data: any) {
 
 // Function to handle chat requests
 export async function handleChat(req: any, res: any) {
+    console.log('|-o-| Handling chat request...');
     try {
         const userInput = req.body.query; // Extract user input
         // Generate a GraphQL query using OpenAI
@@ -194,8 +195,9 @@ export async function handleChat(req: any, res: any) {
 
         // Assess the GraphQL response
         const assessedResponse = assessGraphQLResponse(graphqlResponse);
-
-        return assessedResponse;
+        console.log('|-O-| Assessed response:', assessedResponse);
+        //return assessedResponse;
+        res.json(assessedResponse); // Explicitly send JSON response
     } catch (error) {
         console.error('Error handling user query:', error);
         return { error: "Failed to handle chat request", details: error };
