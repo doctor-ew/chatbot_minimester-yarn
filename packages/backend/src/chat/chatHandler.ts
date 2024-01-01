@@ -123,12 +123,16 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
 
 // Function to send the GraphQL query to your GraphQL server
 export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
-    console.log('|-oo-| Sending GraphQL query to server:', gqlQuery);
+    //const geturl = 'http://localhost:4000/dev/rickmorty';
+    const geturl: string = 'https://mms-graph.doctorew.com/rickmorty';
+
+    console.log('|-oo-| Sending GraphQL query to server:', gqlQuery, "at URL:", geturl);
     try {
-        //const response = await axios.post('http://localhost:4000/dev/rickmorty', {
-        const response = await axios.post('https://mms-graph.doctorew.com/rickmorty', {
+        //const response = await axios.post('', {
+        const response = await axios.post(geturl, {
             query: gqlQuery,
         });
+
         return response.data;
     } catch (error: any) {  // Change to 'any' to avoid TypeScript errors
         console.error("Error sending GraphQL query to server:", error);
