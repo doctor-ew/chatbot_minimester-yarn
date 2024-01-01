@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, CSSProperties} from 'react';
 import { apolloClient } from '../lib/apolloClient';
 import { useQuery } from '@apollo/client';
 import Card from '../components/Card';
@@ -34,9 +34,11 @@ const RickAndMortyPage = () => {
     }, [morties]);
 
 
-    const handleChatQuery = async (query) => {
+    const handleChatQuery = async (query:string) => {
         console.log("|-hcq-|", query);
-        const response = await fetch('http://local.doctorew.com:4000/api/chat/', {
+        //const cqurl:string = 'http://local.doctorew.com:4000/api/chat/';
+        const cqurl:string = 'https://mms-graph.doctorew.com/chat/';
+        const response = await fetch(cqurl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query })
@@ -45,7 +47,7 @@ const RickAndMortyPage = () => {
 
         if (data && data.morties) {
             // Update the morties state with the new data
-            const newMorties = data.morties.map(morty => ({
+            const newMorties = data.morties.map((morty:any) => ({
                 node: {
                     id: morty.id,
                     name: morty.name,
@@ -125,7 +127,7 @@ const RickAndMortyPage = () => {
     }, [morties, updateBackgroundMorty]);
 
     useEffect(() => {
-        let isScrolling;
+        let isScrolling: number;
 
         const handleScroll = () => {
             window.clearTimeout(isScrolling);
@@ -145,7 +147,7 @@ const RickAndMortyPage = () => {
             const rotation = window.scrollY % 360;
             setBgMortyRotation(rotation);
 
-            isScrolling = setTimeout(() => {
+            isScrolling = setTimeout(() : void => {
                 morties.forEach(({ node }, index) => {
                     // Calculate the index within the current set of 12 Morties
                     const setIndex = index % 12;
@@ -158,7 +160,7 @@ const RickAndMortyPage = () => {
                         }
                     }
                 });
-            }, 66);
+            }, 66) as unknown as number;
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -166,7 +168,7 @@ const RickAndMortyPage = () => {
     }, [morties, totalMortiesLoaded]);
 
     // Define the background image style
-    const bgImageStyle = {
+    const bgImageStyle : CSSProperties = {
         backgroundImage: `url(https://pocketmortys.net/media/com_pocketmortys/assets/${bgMortyAssetId}Front.png)`,
         backgroundSize: '25%', // Adjust the size as needed
         backgroundAttachment: 'fixed',
