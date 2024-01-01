@@ -1,8 +1,12 @@
 // ChatBox.tsx
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 
-const ChatBox = ({ onSend }) => {
-    const handleSubmit = (event) => {
+type ChatBoxProps = {
+    onSend: (query: string) => void;
+};
+
+const ChatBox :  FC<ChatBoxProps> = ({ onSend }) => {
+    const handleSubmit = (event:any) => {
         event.preventDefault();
         const searchData = event.target.search.value;
         console.log("Search data: ", searchData);

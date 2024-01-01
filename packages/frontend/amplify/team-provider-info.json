@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mmschat-dev-153641-authRole",
+      "UnauthRoleArn": "arn:aws:iam::432230020714:role/amplify-mmschat-dev-153641-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::432230020714:role/amplify-mmschat-dev-153641-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mmschat-dev-153641-deployment",
+      "UnauthRoleName": "amplify-mmschat-dev-153641-unauthRole",
+      "StackName": "amplify-mmschat-dev-153641",
+      "StackId": "arn:aws:cloudformation:us-east-1:432230020714:stack/amplify-mmschat-dev-153641/7920bd70-a8e5-11ee-a24f-0ae468daf8b3",
+      "AmplifyAppId": "d2b6j0sh1e4ayo"
+    }
+  }
+}
