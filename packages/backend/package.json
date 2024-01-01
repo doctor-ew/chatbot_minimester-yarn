@@ -31,7 +31,8 @@
     "ncp": "^2.0.0",
     "node-fetch": "^3.3.2",
     "openai": "^4.24.1",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "serverless-plugin-include-dependencies": "^5.1.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.130",
@@ -57,6 +58,7 @@
   "description": "A GraphQL server that fetches data from the Rick and Morty API and provides additional functionality.",
   "main": "index.js",
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "DoctorEw",
+  "license": "MIT",
+  "repository": "https://github.com/doctor-ew/chatbot_minimester-yarn/tree/main/packages/backend"
 }

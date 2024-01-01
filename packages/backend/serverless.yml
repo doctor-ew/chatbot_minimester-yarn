@@ -27,6 +27,7 @@ functions:
 plugins:
   - serverless-offline
   - serverless-domain-manager
+  - serverless-plugin-include-dependencies
 
 custom:
   serverless-offline:
@@ -39,4 +40,7 @@ custom:
     createRoute53Record: true
     endpointType: 'edge' # Use 'regional' or 'edge' if you prefer an edge-optimized setup
     securityPolicy: tls_1_2
+  includeDependencies:
+    enableCaching: true
+
 

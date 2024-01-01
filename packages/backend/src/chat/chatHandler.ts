@@ -125,7 +125,8 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
 export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
     console.log('|-oo-| Sending GraphQL query to server:', gqlQuery);
     try {
-        const response = await axios.post('http://localhost:4000/dev/rickmorty', {
+        //const response = await axios.post('http://localhost:4000/dev/rickmorty', {
+        const response = await axios.post('https://mms-graph.doctorew.com/rickmorty', {
             query: gqlQuery,
         });
         return response.data;
