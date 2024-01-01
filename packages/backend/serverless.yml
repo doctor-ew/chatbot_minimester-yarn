@@ -11,20 +11,23 @@ provider:
 functions:
   pocketMorty:
     handler: dist/server-lambda.handler
+    #timeout: 30 # Timeout in seconds
     events:
       - http:
-          path: /rickmorty
+          path: rickmorty
           method: post
   chat:
     handler: dist/server-lambda.handler
+    #timeout: 30 # Timeout in seconds
     events:
       - http:
-          path: /api/chat
+          path: api/chat
           method: post
 
 plugins:
   - serverless-offline
   - serverless-domain-manager
+  - serverless-plugin-include-dependencies
 
 custom:
   serverless-offline:
@@ -37,4 +40,7 @@ custom:
     createRoute53Record: true
     endpointType: 'edge' # Use 'regional' or 'edge' if you prefer an edge-optimized setup
     securityPolicy: tls_1_2
+  includeDependencies:
+    enableCaching: true
+
 

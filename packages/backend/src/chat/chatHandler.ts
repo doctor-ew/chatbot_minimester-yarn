@@ -123,11 +123,16 @@ export async function generateGraphQLQuery(userInput: string): Promise<string> {
 
 // Function to send the GraphQL query to your GraphQL server
 export async function sendToGraphQLServer(gqlQuery: string): Promise<any> {
-    console.log('|-oo-| Sending GraphQL query to server:', gqlQuery);
+    //const geturl = 'http://localhost:4000/dev/rickmorty';
+    const geturl: string = 'https://mms-graph.doctorew.com/rickmorty';
+
+    console.log('|-oo-| Sending GraphQL query to server:', gqlQuery, "at URL:", geturl);
     try {
-        const response = await axios.post('http://localhost:4000/dev/rickmorty', {
+        //const response = await axios.post('', {
+        const response = await axios.post(geturl, {
             query: gqlQuery,
         });
+
         return response.data;
     } catch (error: any) {  // Change to 'any' to avoid TypeScript errors
         console.error("Error sending GraphQL query to server:", error);
@@ -184,6 +189,7 @@ function processGraphQLData(data: any) {
 
 // Function to handle chat requests
 export async function handleChat(req: any, res: any) {
+    console.log('|-o-| Handling chat request...');
     try {
         const userInput = req.body.query; // Extract user input
         // Generate a GraphQL query using OpenAI
@@ -194,8 +200,9 @@ export async function handleChat(req: any, res: any) {
 
         // Assess the GraphQL response
         const assessedResponse = assessGraphQLResponse(graphqlResponse);
-
-        return assessedResponse;
+        console.log('|-O-| Assessed response:', assessedResponse);
+        //return assessedResponse;
+        res.json(assessedResponse); // Explicitly send JSON response
     } catch (error) {
         console.error('Error handling user query:', error);
         return { error: "Failed to handle chat request", details: error };
