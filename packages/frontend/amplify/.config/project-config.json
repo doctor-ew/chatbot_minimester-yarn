@@ -1,12 +1,12 @@
 {
-  "projectName": "mmschat",
+  "projectName": "mmschatfe",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {
-      "SourceDir": "packages/frontend/src",
-      "DistributionDir": "packages/frontend/.next",
+      "SourceDir": " packages/frontend/src",
+      "DistributionDir": " packages/frontend/.next",
       "BuildCommand": "yarn run build",
       "StartCommand": "yarn run start"
     }
